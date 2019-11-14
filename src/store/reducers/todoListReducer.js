@@ -38,7 +38,6 @@ const todoListReducer = (state = initState, action) => {
             // }
             break;
         case "DELETE_LIST":
-            //console.log("ID passed to reducer"+action.id)
             const fireStore2=getFirestore();
             fireStore2.collection('todoLists').get().then(function(querySnapshot){
                 querySnapshot.forEach(function(doc) {
@@ -49,16 +48,19 @@ const todoListReducer = (state = initState, action) => {
             });
             return state;
             break;
-        case "EDIT_LIST(":
-            alert("!!!!EditList>>>>>>FROM todoListReducer.js!!!")
-            if (action.editionType="owner"){
-                fireStore.collection('todoLists').description=action.newOwner;
-            }
-            else if (action.editionType="name"){
-                fireStore.collection('todoLists').name=action.newName;
-            }
+        case "EDIT_LIST_NAME":
+            const fireStore4=getFirestore();
+            fireStore4.collection('todoLists').doc(action.id).update({
+                    "name": action.newListName   
+            })
+            return state;
+        case "EDIT_LIST_OWNER":
+            const fireStore5=getFirestore();
+            fireStore5.collection('todoLists').doc(action.id).update({
+                    "owner": action.newListOwner 
+            })
+            return state;
 
-            break;
         case "ADD_NEW_ITEM":
             break;
         case "DELETE_NEW_ITEM":

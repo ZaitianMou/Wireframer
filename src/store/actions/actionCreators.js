@@ -44,26 +44,29 @@ export function createTodoListError(error) {
     }
 }
 
-export function editList(id,editionType,newListOwner,newListName){
-    
+export function editListName(id,newListName){
     return {
-        type:"EDIT_LIST",
+        type:"EDIT_LIST_NAME",
         id:id,
-        editionType:editionType,
-        newListOwner:newListOwner,
         newListName:newListName
     }
 }
+export function editListOwner(id,newListOwner){
+    return {
+        type:"EDIT_LIST_OWNER",
+        id:id,
+        newListOwner:newListOwner
+    }
+}
+
 
 export function addList(){
-    console.log(">>>>>>>addList actionCreator");
     return {
         type:"ADD_NEW_LIST"
     }
 }
 
 export function deleteList(id){
-    console.log(">>>>>>>addList actionCreator");
     return {
         type:"DELETE_LIST",
         id:id

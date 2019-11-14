@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemsList from './ItemsList.js'
 import { firestoreConnect } from 'react-redux-firebase';
-import {editList} from '../../store/actions/actionCreators';
+
 import {deleteList} from '../../store/actions/actionCreators';
+import {editListName} from '../../store/actions/actionCreators';
+import {editListOwner} from '../../store/actions/actionCreators';
 
 
 import {bindActionCreators} from 'redux';
@@ -16,16 +18,13 @@ class ListScreen extends Component {
         owner: '',
     }
 
-    handleChange = (e,editionType) => {
-        const { target } = e;
-
-        // this.setState(state => ({
-        //     ...state,
-        //     [target.id]: target.value,
-        // }));
-        this.props.editList(this.props.todoList.id, editionType,e.target.value,e.target.value);
-        // this.props.editList();
-    }
+    // handleChange = (e,editionType) => {
+    //     const { target } = e;
+    //     // this.setState(state => ({
+    //     //     ...state,
+    //     //     [target.id]: target.value,
+    //     // }));
+    // }
 
     render() {
         const auth = this.props.auth;
@@ -40,18 +39,18 @@ class ListScreen extends Component {
             <div className="container white">
                 <div>
                 <h5 className="grey-text text-darken-3">Todo List</h5>
-                <Link path="/">
+                <Link to="/">
                     <image id="list_trash" onClick={()=>this.props.deleteList(todoList.id)}>&#128465;</image>
                 </Link>
                 </div>
                 
                 <div className="input-field">
-                    <label htmlFor="email">Name</label>
-                    <input className="active" value={todoList.name} type="text" name="name" id="name" onChange={(e)=>this.handleChange(e,"name")} />
+                    <label htmlFor="email" className="active">Name</label>
+                    <input className="active" value={todoList.name} type="text" name="name" id="name" onChange={(event)=>this.props.editListName(this.props.todoList.id,event.target.value)} />
                 </div>
                 <div className="input-field">
-                    <label htmlFor="password">Owner</label>
-                    <input className="active" type="text" name="owner" id="owner" onChange={this.props.editList("owner",)} value={todoList.owner} />
+                    <label htmlFor="password" className="active">Owner</label>
+                    <input className="active" value={todoList.owner} type="text" name="owner" id="owner" onChange={(event)=>this.props.editListOwner(this.props.todoList.id,event.target.value)}  />
                 </div>
                 <ItemsList todoList={todoList} />
             </div>
@@ -61,8 +60,9 @@ class ListScreen extends Component {
 
 const mapDispatchToProps=(dispatch)=>{
     return {
-        editList:(x,y,z,w)=>{dispatch(editList(x,y,z,w))},
-        deleteList: (id)=>{dispatch(deleteList(id))}
+        deleteList: (id)=>{dispatch(deleteList(id))},
+        editListName:(x,y)=>{dispatch(editListName(x,y))},
+        editListOwner:(x,y)=>{dispatch(editListOwner(x,y))}
     }
 }
 
@@ -75,7 +75,6 @@ const mapStateToProps = (state, ownProps) => {
   if(todoList)
   todoList.id = id;
    
-
 
   return {
     todoList,

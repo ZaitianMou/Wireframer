@@ -35,7 +35,7 @@ class HomeScreen extends Component {
                         
                         <div className="home_new_list_container">
                             {/*  path below should be similiar with that/todoList"+todoLists[0].id */}
-                                <Link  path="/" className="home_new_list_button"  />
+                                <Link  to="/" className="home_new_list_button"  />
                                     <button className="home_new_list_button" onClick={this.handleAddList}  >
                                         Create a New To Do List
                                     </button>
