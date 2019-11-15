@@ -20,22 +20,6 @@ const todoListReducer = (state = initState, action) => {
             })
             
             return state;
-            // return {
-            //     todoLists: [...state.todoLists, {
-            //         "key": 5,
-            //         "name": "T",
-            //         "owner": "No One",
-            //         "items": [
-            //             {
-            //                 "key": 0,
-            //                 "description": "FUCK You Up",
-            //                 "due_date": "2019-09-30",
-            //                 "assigned_to": "Mou",
-            //                 "completed": true
-            //             }
-            //         ]
-            //     }]
-            // }
             break;
         case "DELETE_LIST":
             const fireStore2=getFirestore();
@@ -62,7 +46,19 @@ const todoListReducer = (state = initState, action) => {
             return state;
 
         case "ADD_NEW_ITEM":
-            break;
+            const fireStore6=getFirestore();
+            console.log(action.todoList.items);
+            //action.todoList.items.push({});
+            // const x=fireStore6.collection('todoLists').doc(action.id).once('value');
+            // console.log(x);
+
+            // fireStore6.collection('todoLists').doc(action.id).update({
+            //     "items": [...action.todoList.items,{}]
+            // });
+            
+            fireStore6.collection('todoLists').doc(action.id).items.push({}
+            )
+            return state;
         case "DELETE_NEW_ITEM":
             break;
         case "EDIT_NEW_ITEM":

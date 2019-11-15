@@ -8,7 +8,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 import {deleteList} from '../../store/actions/actionCreators';
 import {editListName} from '../../store/actions/actionCreators';
 import {editListOwner} from '../../store/actions/actionCreators';
-
+import {addItem} from '../../store/actions/actionCreators';
+import { Button,Icon} from 'react-materialize';
 
 import {bindActionCreators} from 'redux';
 
@@ -53,6 +54,16 @@ class ListScreen extends Component {
                     <input className="active" value={todoList.owner} type="text" name="owner" id="owner" onChange={(event)=>this.props.editListOwner(this.props.todoList.id,event.target.value)}  />
                 </div>
                 <ItemsList todoList={todoList} />
+                
+                <div>
+                    <Button
+                    floating
+                    large
+                    waves="light"
+                    onClick={()=>this.props.addItem(this.props.todoList.id,this.props.todoList)}
+                    icon={<Icon />}
+                    />
+</div>
             </div>
         );
     }
@@ -62,7 +73,8 @@ const mapDispatchToProps=(dispatch)=>{
     return {
         deleteList: (id)=>{dispatch(deleteList(id))},
         editListName:(x,y)=>{dispatch(editListName(x,y))},
-        editListOwner:(x,y)=>{dispatch(editListOwner(x,y))}
+        editListOwner:(x,y)=>{dispatch(editListOwner(x,y))},
+        addItem:(id,y)=>{dispatch(addItem(id,y))}
     }
 }
 

@@ -32,43 +32,25 @@ export function logoutSuccess() {
 
 // THESE CREATORS MAKE ACTIONS FOR ASYNCHRONOUS TODO LIST UPDATES
 export function createTodoList(todoList) {
-    return {
-        type: 'CREATE_TODO_LIST',
-        todoList
-    }
+    return {type: 'CREATE_TODO_LIST', todoList}
 }
 export function createTodoListError(error) {
-    return {
-        type: 'CREATE_TODO_LIST_ERROR',
-        error
-    }
+    return {type: 'CREATE_TODO_LIST_ERROR',error}
 }
 
 export function editListName(id,newListName){
-    return {
-        type:"EDIT_LIST_NAME",
-        id:id,
-        newListName:newListName
-    }
+    return {type:"EDIT_LIST_NAME",id:id,newListName:newListName}
 }
 export function editListOwner(id,newListOwner){
-    return {
-        type:"EDIT_LIST_OWNER",
-        id:id,
-        newListOwner:newListOwner
-    }
+    return {type:"EDIT_LIST_OWNER", id:id, newListOwner:newListOwner}
 }
-
-
 export function addList(){
-    return {
-        type:"ADD_NEW_LIST"
-    }
+    return { type:"ADD_NEW_LIST"}
 }
 
 export function deleteList(id){
-    return {
-        type:"DELETE_LIST",
-        id:id
-    }
+    return {type:"DELETE_LIST",id:id}
+}
+export function addItem(id,todoList){
+    return {type:"ADD_NEW_ITEM",id:id,todoList:todoList}
 }

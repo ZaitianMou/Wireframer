@@ -35,7 +35,7 @@ class ItemCard extends React.Component {
                     </div>
                 </div>
 
-                <div className="fabButton">
+                {/* <div className="fabButton">
                     <Button
                         floating
                         fab={{ direction: 'left' }}
@@ -46,7 +46,22 @@ class ItemCard extends React.Component {
                         <Button floating className="yellow darken-1" />
                         <Button floating className="item_delete_button" icon={Delete} />
                     </Button>
+                </div> */}
+                <div className="small-4 columns toolbar">
+                    <div className="fab">
+                        <div className="btn-floating btn-small red ">
+                            
+                            <i className="large material-icons">mode_edit</i>
+                        </div>
                     
+                        <div className="button">
+                        <div id="wrapper" >
+                            <li><a className="btn-floating green"><i className="material-icons">arrow_upward</i></a></li>
+                            <li><a className="btn-floating green"><i className="material-icons">arrow_downward</i></a></li>
+                            <li><a className="btn-floating red"><i className="material-icons">close</i></a></li>
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

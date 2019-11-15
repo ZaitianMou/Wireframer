@@ -71,3 +71,18 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   color: red;
   
 }
+.button {
+  display:none;
+}
+.fab:hover .button{
+  display: inline-block;
+}
+#wrapper {
+  display: flex;
+}
+
+.toolbar{
+  position: absolute;
+  left: 75%;
+  top: 35%;
+}
