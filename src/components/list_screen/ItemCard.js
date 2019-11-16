@@ -1,5 +1,7 @@
 import React from 'react';
 import {deleteItem} from "../../store/actions/actionCreators";
+import {moveItemUp} from "../../store/actions/actionCreators";
+import {moveItemDown} from "../../store/actions/actionCreators";
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
@@ -52,8 +54,8 @@ class ItemCard extends React.Component {
                     
                         <div className="button">
                         <div id="wrapper" >
-                            <li><a className="btn-floating green"><i className="material-icons">arrow_upward</i></a></li>
-                            <li><a className="btn-floating green"><i className="material-icons">arrow_downward</i></a></li>
+                            <li><a className="btn-floating green" onClick={()=>this.props.moveItemUp(id,todoList,item)}><i className="material-icons">arrow_upward</i></a></li>
+                            <li><a className="btn-floating green" onClick={()=>this.props.moveItemDown(id,todoList,item)}><i className="material-icons">arrow_downward</i></a></li>
                             <li><a className="btn-floating red" onClick={()=>this.props.deleteItem(id,todoList,item)}><i className="material-icons">close</i></a></li>
                         </div>
                         </div>
@@ -67,7 +69,8 @@ class ItemCard extends React.Component {
 const mapDispatchToProps=(dispatch)=>{
     return {
         deleteItem:(x,y,z)=>{dispatch(deleteItem(x,y,z))},
-      
+        moveItemDown:(x,y,z)=>{dispatch(moveItemDown(x,y,z))},
+        moveItemUp:(x,y,z)=>{dispatch(moveItemUp(x,y,z))},
     }
 }
   

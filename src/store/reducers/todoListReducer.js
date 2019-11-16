@@ -71,6 +71,45 @@ const todoListReducer = (state = initState, action) => {
                 })
             });
             return state;
+            
+        case "MOVE_ITEM_UP":
+            const indexForMoveUp=action.todoList.items.indexOf(action.item);
+            if (indexForMoveUp===0){
+                return state;
+            }
+            const fireStore8=getFirestore();
+            const todoListForMoveUp=fireStore8.collection("todoLists").doc(action.id);
+            todoListForMoveUp.get().then(doc=>{
+                const data=doc.data().items;
+
+                const temp=data[indexForMoveUp-1];
+                data[indexForMoveUp-1]=data[indexForMoveUp];
+                data[indexForMoveUp]=temp;
+                todoListForMoveUp.update({
+                    "items": [...data]
+                })
+            });
+            return state;
+
+        case "MOVE_ITEM_DOWN":
+            const indexForMoveDown=action.todoList.items.indexOf(action.item);
+            if (indexForMoveDown===0){
+                return state;
+            }
+            const fireStore9=getFirestore();
+            const todoListForMoveDown=fireStore9.collection("todoLists").doc(action.id);
+            todoListForMoveDown.get().then(doc=>{
+                const data=doc.data().items;
+
+                const temp=data[indexForMoveDown+1];
+                data[indexForMoveDown+1]=data[indexForMoveDown];
+                data[indexForMoveDown]=temp;
+                todoListForMoveDown.update({
+                    "items": [...data]
+                })
+            });
+            return state;
+
         case "EDIT_ITEM":
             break;
         default:

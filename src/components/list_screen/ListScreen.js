@@ -9,7 +9,7 @@ import {deleteList} from '../../store/actions/actionCreators';
 import {editListName} from '../../store/actions/actionCreators';
 import {editListOwner} from '../../store/actions/actionCreators';
 import {addItem} from '../../store/actions/actionCreators';
-import { Button,Icon} from 'react-materialize';
+import { Button,Icon,Modal} from 'react-materialize';
 
 import {bindActionCreators} from 'redux';
 
@@ -40,9 +40,26 @@ class ListScreen extends Component {
             <div className="container white">
                 <div>
                 <h5 className="grey-text text-darken-3">Todo List</h5>
-                <Link to="/">
+                {/* <Link to="/">
                     <image id="list_trash" onClick={()=>this.props.deleteList(todoList.id)}>&#128465;</image>
-                </Link>
+                </Link> */}
+                <div>
+                <Button href="#modal1" className="modal-trigger red çmodal_delete_list">
+                    <i className="material-icons">delete_forever</i>
+                </Button>
+
+                <Modal id="modal1" header="Delete List?">
+                        Are you sure you would like to delete the list?
+                        <br></br>
+                        <b>Note: it's not undoable.</b>
+                        <Link to="/">
+                        <Button className="submit_button_in_modal red"onClick={()=>this.props.deleteList(todoList.id)}>
+                            <i>Yes</i>
+                        </Button>
+                        </Link>
+                </Modal>
+                </div>
+
                 </div>
                 
                 <div className="input-field">

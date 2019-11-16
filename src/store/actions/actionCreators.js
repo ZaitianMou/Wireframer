@@ -58,3 +58,10 @@ export function addItem(id,todoList){
 export function deleteItem(id,todoList,item){
     return {type:"DELETE_ITEM",id:id,todoList:todoList,item:item}
 }
+
+export function moveItemUp(id,todoList,item){
+    return {type:"MOVE_ITEM_UP",id:id,todoList:todoList,item:item}
+}
+export function moveItemDown(id,todoList,item){
+    return {type:"MOVE_ITEM_DOWN",id:id,todoList:todoList,item:item}
+}
