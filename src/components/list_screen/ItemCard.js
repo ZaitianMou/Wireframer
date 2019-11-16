@@ -54,9 +54,9 @@ class ItemCard extends React.Component {
                     
                         <div className="button">
                         <div id="wrapper" >
-                            <li><a className="btn-floating green" onClick={()=>this.props.moveItemUp(id,todoList,item)}><i className="material-icons">arrow_upward</i></a></li>
-                            <li><a className="btn-floating green" onClick={()=>this.props.moveItemDown(id,todoList,item)}><i className="material-icons">arrow_downward</i></a></li>
-                            <li><a className="btn-floating red" onClick={()=>this.props.deleteItem(id,todoList,item)}><i className="material-icons">close</i></a></li>
+                            <li><a className="btn-floating green" onClick={(event)=>this.moveUp(event,id,todoList,item)}><i className="material-icons">arrow_upward</i></a></li>
+                            <li><a className="btn-floating green" onClick={(event)=>this.moveDown(event,id,todoList,item)}><i className="material-icons">arrow_downward</i></a></li>
+                            <li><a className="btn-floating red" onClick={(event)=>this.delete(event,id,todoList,item)}><i className="material-icons">close</i></a></li>
                         </div>
                         </div>
                     </div>
@@ -64,7 +64,21 @@ class ItemCard extends React.Component {
             </div>
         );
     }
+    moveUp=(event,id,todoList,item) =>{
+        event.stopPropagation();
+        this.props.moveItemUp(id,todoList,item);
+    }
+    moveDown=(event,id,todoList,item) =>{
+        event.stopPropagation();
+        this.props.moveItemDown(id,todoList,item);
+    }
+    delete=(event,id,todoList,item) =>{
+        event.stopPropagation();
+        this.props.deleteItem(id,todoList,item);
+    }
 }
+
+
 
 const mapDispatchToProps=(dispatch)=>{
     return {

@@ -93,7 +93,7 @@ const todoListReducer = (state = initState, action) => {
 
         case "MOVE_ITEM_DOWN":
             const indexForMoveDown=action.todoList.items.indexOf(action.item);
-            if (indexForMoveDown===0){
+            if (indexForMoveDown===action.todoList.items.length-1){
                 return state;
             }
             const fireStore9=getFirestore();
@@ -109,12 +109,123 @@ const todoListReducer = (state = initState, action) => {
                 })
             });
             return state;
+        case "SORT_ITEMS":
+            const fireStore10=getFirestore();
+            const todoListForSort=fireStore10.collection("todoLists").doc(action.id);
+            if (action.sortingType==="description"){
+                todoListForSort.get().then(doc=>{
+                    const data=doc.data().items;
+                    data.sort(compareByDescription);
+                    todoListForSort.update({
+                        "items":[...data]
+                    })
+                })
+                if (window.currentSortByDescription==="sortByItemDescriptionDecrease"){
+                    window.currentSortByDescription="sortByItemDescriptionIncrease";
+                }
+                else {
+                    window.currentSortByDescription="sortByItemDescriptionDecrease";
+                }
+                
+            }
+            else if (action.sortingType==="due_date"){
+                todoListForSort.get().then(doc=>{
+                    const data=doc.data().items;
+                    data.sort(compareByDueDate);
+                    todoListForSort.update({
+                        "items":[...data]
+                    })
+                })
+                if (window.currentSortByDueDate==="sortByItemDuaDateDecrease"){
+                    window.currentSortByDueDate="sortByItemDueDateIncrease";
+                }
+                else {
+                    window.currentSortByDueDate="sortByItemDuaDateDecrease";
+                }
 
+            }
+            else if (action.sortingType==="completed"){
+                todoListForSort.get().then(doc=>{
+                    const data=doc.data().items;
+                    data.sort(compareByCompleted);
+                    todoListForSort.update({
+                        "items":[...data]
+                    })
+                })
+                if (window.currentSortByCompleted==="sortByItemCompletedDecrease"){
+                    window.currentSortByCompleted="sortByItemCompletedIncrease";
+                }
+                else {
+                    window.currentSortByCompleted="sortByItemCompletedDecrease";
+                }
+            }
+            else {
+                alert("!!!!This should not happen!!!")
+            }
+            return state;
         case "EDIT_ITEM":
             break;
         default:
             return state;
     }
+    
 };
+const compareByDescription = (item1, item2) => {
+    if (window.currentSortByDescription == "sortByItemDescriptionDecrease") {
+
+        if (item1.description < item2.description)
+            return -1;
+        else if (item1.description > item2.description)
+            return 1;
+        else
+            return 0;
+        
+    }
+    else {
+        if (item1.description < item2.description)
+            return 1;
+        else if (item1.description > item2.description)
+            return -1;
+        else
+            return 0;
+    }
+}
+const compareByDueDate=(item1, item2) =>{
+    if (window.currentSortByDueDate == "sortByItemDueDateIncrease") {
+        if (item1.due_date < item2.due_date)
+            return -1;
+        else if (item1.due_date > item2.due_date)
+            return 1;
+        else
+            return 0;
+    }
+    else {
+        if (item1.due_date < item2.due_date)
+            return 1;
+        else if (item1.due_date > item2.due_date)
+            return -1;
+        else
+            return 0;
+    }
+}
+const compareByCompleted=(item1, item2)=>{
+    if (window.currentSortByCompleted == "sortByItemCompletedIncrease") {
+        if (item1.completed < item2.completed)
+            return -1;
+        else if (item1.completed > item2.completed)
+            return 1;
+        else
+            return 0;
+    }
+    else {
+        if (item1.completed < item2.completed)
+            return 1;
+        else if (item1.completed > item2.completed)
+            return -1;
+        else
+            return 0;
+    }
+}
+
 
 export default todoListReducer;

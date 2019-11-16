@@ -65,3 +65,6 @@ export function moveItemUp(id,todoList,item){
 export function moveItemDown(id,todoList,item){
     return {type:"MOVE_ITEM_DOWN",id:id,todoList:todoList,item:item}
 }
+export function sortItems(sortingType,id,todoList,items){
+    return {type:"SORT_ITEMS",sortingType:sortingType,id:id,todoList:todoList,items:items}
+}

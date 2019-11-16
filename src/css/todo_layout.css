@@ -93,7 +93,9 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 .modal_delete_list{
-  position: absolute ;
+  /* position: absolute;
   left: 78%;
-  top: 10%;
+  top: 10%; */
+  position: relative;
+left: 90%;
 }
