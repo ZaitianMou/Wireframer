@@ -63,7 +63,7 @@ class ListScreen extends Component {
                     onClick={()=>this.props.addItem(this.props.todoList.id,this.props.todoList)}
                     icon={<Icon />}
                     />
-</div>
+                </div>
             </div>
         );
     }

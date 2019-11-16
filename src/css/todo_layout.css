@@ -83,6 +83,6 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 
 .toolbar{
   position: absolute;
-  left: 75%;
-  top: 35%;
+  left: 70%;
+  top: 5%;
 }

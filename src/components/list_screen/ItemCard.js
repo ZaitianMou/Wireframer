@@ -1,15 +1,21 @@
 import React from 'react';
-import { Button } from 'react-materialize';
-import Delete from '../../images/delete.png';
-import MoveDown from '../../images/MoveDown.png'
-import MoveUp from '../../images/MoveUp.png';
+import {deleteItem} from "../../store/actions/actionCreators";
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { connect } from 'react-redux';
 //import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
 
 
 
 class ItemCard extends React.Component {
+    state = {
+        name: '',
+        owner: '',
+    }
     render() {
+        const {todoList} =this.props;
         const { item } = this.props;
+        const id=this.props.id;
         let statusText = "Completed"
         let colorForText="blackForStatus"
         if (!item.completed) {
@@ -25,6 +31,10 @@ class ItemCard extends React.Component {
                     <div className='list_item_card_description'>
                         {item.description}
                     </div>
+                    <div className='list_item_card_assigned_to'>
+                        <b>Assigned to:</b>
+                        {item.assigned_to}
+                    </div>
                     <div className='list_item_card_due_date'>
                         {item.due_date}
                     </div>
@@ -34,31 +44,17 @@ class ItemCard extends React.Component {
                         </p>
                     </div>
                 </div>
-
-                {/* <div className="fabButton">
-                    <Button
-                        floating
-                        fab={{ direction: 'left' }}
-                        className="fabButton"
-                        large
-                    >
-                        <Button floating className="red" />
-                        <Button floating className="yellow darken-1" />
-                        <Button floating className="item_delete_button" icon={Delete} />
-                    </Button>
-                </div> */}
                 <div className="small-4 columns toolbar">
                     <div className="fab">
-                        <div className="btn-floating btn-small red ">
-                            
-                            <i className="large material-icons">mode_edit</i>
+                        <div className="btn-floating red ">
+                            <i className="material-icons">mode_edit</i>
                         </div>
                     
                         <div className="button">
                         <div id="wrapper" >
                             <li><a className="btn-floating green"><i className="material-icons">arrow_upward</i></a></li>
                             <li><a className="btn-floating green"><i className="material-icons">arrow_downward</i></a></li>
-                            <li><a className="btn-floating red"><i className="material-icons">close</i></a></li>
+                            <li><a className="btn-floating red" onClick={()=>this.props.deleteItem(id,todoList,item)}><i className="material-icons">close</i></a></li>
                         </div>
                         </div>
                     </div>
@@ -67,4 +63,17 @@ class ItemCard extends React.Component {
         );
     }
 }
-export default ItemCard;
+
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        deleteItem:(x,y,z)=>{dispatch(deleteItem(x,y,z))},
+      
+    }
+}
+  
+  export default compose(
+    connect(null,mapDispatchToProps),
+    firestoreConnect([
+      { collection: 'todoLists' },
+    ]),
+  )(ItemCard);

@@ -1,5 +1,6 @@
 import { getFirestore } from 'redux-firestore';
 import { get } from 'http';
+import { firestore } from 'firebase';
 
 const initState = {
     todoLists: []
@@ -17,6 +18,9 @@ const todoListReducer = (state = initState, action) => {
                 "name": "UNKNOWN",
                 "owner": "",
                 "items": []
+            }).then(x=>{
+                console.log("!"+x.id);
+                action.history.push('/todoList/'+x.id);
             })
             
             return state;
@@ -47,25 +51,30 @@ const todoListReducer = (state = initState, action) => {
 
         case "ADD_NEW_ITEM":
             const fireStore6=getFirestore();
-            console.log(action.todoList.items);
-            //action.todoList.items.push({});
-            // const x=fireStore6.collection('todoLists').doc(action.id).once('value');
-            // console.log(x);
-
-            // fireStore6.collection('todoLists').doc(action.id).update({
-            //     "items": [...action.todoList.items,{}]
-            // });
-            
-            fireStore6.collection('todoLists').doc(action.id).items.push({}
-            )
+            const todoList=fireStore6.collection("todoLists").doc(action.id);
+            todoList.get().then(doc=>{
+                const data=doc.data().items;
+                todoList.update({
+                    "items": [...data,{}]
+                })
+            });
             return state;
-        case "DELETE_NEW_ITEM":
-            break;
-        case "EDIT_NEW_ITEM":
+        case "DELETE_ITEM":
+            const index=action.todoList.items.indexOf(action.item);
+            const fireStore7=getFirestore();
+            const todoListOfCloud=fireStore7.collection("todoLists").doc(action.id);
+            todoListOfCloud.get().then(doc=>{
+                const data=doc.data().items;
+                data.splice(index,1);
+                todoListOfCloud.update({
+                    "items": [...data]
+                })
+            });
+            return state;
+        case "EDIT_ITEM":
             break;
         default:
             return state;
-            break;
     }
 };
 

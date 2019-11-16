@@ -47,14 +47,14 @@ class HomeScreen extends Component {
         );
     }
     handleAddList=()=>{
-        this.props.addList();
+        this.props.addList(this.props.history);
     }
    
 }
 
 const mapDispatchToProps=(dispatch)=>{
     return {
-        addList:()=>{dispatch(addList())}
+        addList:(x)=>{dispatch(addList(x))}
     }
 }
 

@@ -53,6 +53,7 @@ div.banner {
 .list_item_card_description {
   position: absolute;
   left: 2%;
+  top:20%;
 }
 .list_item_task_header, .list_item_due_date_header, .list_item_status_header {
   position: absolute;
@@ -61,16 +62,17 @@ div.banner {
 .list_item_card_assigned_to, .list_item_card_due_date, 
 .list_item_card_completed, .list_item_card_not_completed {
   position: absolute;
-  top: 50%;
+  top: 20%;
 }
 .list_item_task_header, .list_item_card_assigned_to {
-  left: 2%;
+  left: 5%;
+  top: 50%;
 }
 .list_item_due_date_header, .list_item_card_due_date {
-  left: 35%;
+  left: 30%;
 }
 .list_item_status_header, .list_item_card_completed, .list_item_card_not_completed {
-  left: 60%;
+  left: 53%;
 }
 .list_item_card_toolbar {
   position: absolute;
@@ -89,4 +91,14 @@ div.banner {
 .list_item_add_card {
   text-align: center;
   vertical-align: center;
+}
+table{
+  width:100%;
+}
+th{
+  min-width: 0;
+  text-align: left;
+}
+.descriptio_deader{
+  text-align: center;
 }

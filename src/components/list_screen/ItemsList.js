@@ -26,14 +26,25 @@ class ItemsList extends React.Component {
                 <table className="highlight">
                     <thead>
                         <tr>
-                            <th >
+                            {/* <th>
                                 <div>
-                                Task
+                                    Task
                                 </div>
-                            </th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th></th>
+                                <div>
+                                    Due Date
+                                </div>
+                                <div>
+                                    Status
+                                </div>
+                                <div>
+                                    Tools
+                                </div>
+                            </th> */}
+                            <th width="30%" className="descriptio_deader">Task</th>
+                            <th width="24%" >Due Date</th>
+                            <th width="16%" className="status_header">Status</th>
+                            <th width="30%" className="tools_header" text-align="left">Tools</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -41,8 +52,8 @@ class ItemsList extends React.Component {
                             item.id = item.key;
                             return (
                             <tr>
-                                <td colSpan="3">
-                                <ItemCard todoList={todoList} item={item} />
+                                <td colSpan="4">
+                                <ItemCard todoList={todoList} item={item} id={todoList.id}/>
                                 </td>
                             </tr>
                             );})

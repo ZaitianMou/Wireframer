@@ -44,8 +44,8 @@ export function editListName(id,newListName){
 export function editListOwner(id,newListOwner){
     return {type:"EDIT_LIST_OWNER", id:id, newListOwner:newListOwner}
 }
-export function addList(){
-    return { type:"ADD_NEW_LIST"}
+export function addList(history){
+    return { type:"ADD_NEW_LIST",history:history}
 }
 
 export function deleteList(id){
@@ -53,4 +53,8 @@ export function deleteList(id){
 }
 export function addItem(id,todoList){
     return {type:"ADD_NEW_ITEM",id:id,todoList:todoList}
+}
+
+export function deleteItem(id,todoList,item){
+    return {type:"DELETE_ITEM",id:id,todoList:todoList,item:item}
 }
