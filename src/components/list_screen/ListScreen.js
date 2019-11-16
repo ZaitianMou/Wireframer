@@ -3,6 +3,7 @@ import { Redirect,Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import ItemsList from './ItemsList.js'
+import { getFirestore } from 'redux-firestore';
 import { firestoreConnect } from 'react-redux-firebase';
 
 import {deleteList} from '../../store/actions/actionCreators';
@@ -35,7 +36,14 @@ class ListScreen extends Component {
         }
         if(!todoList)
         return <React.Fragment />
+        
+        const dt=new Date();
+        const x=dt.toUTCString();
 
+        const fireStore=getFirestore();
+        fireStore.collection('todoLists').doc(todoList.id).update({
+            'lastOpened': {x}
+        });
         return (
             <div className="container white">
                 <div>
@@ -53,7 +61,7 @@ class ListScreen extends Component {
                         Are you sure you would like to delete the list????
                         <br></br>
                         <b>Note: it's not undoable.</b>
-                        <Link to="/">
+                        <Link to="/" >
                         <Button className="submit_button_in_modal red" onClick={()=>this.props.deleteList(todoList.id)}>
                             <i>Yes</i>
                         </Button>

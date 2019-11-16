@@ -15,6 +15,7 @@ class HomeScreen extends Component {
 
     render() {
         const todoLists=this.props.todoLists;
+     
 
         if (!this.props.auth.uid) {
             return <Redirect to="/login" />;
@@ -68,6 +69,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps,mapDispatchToProps),
     firestoreConnect([
-      { collection: 'todoLists' },
+      { collection: 'todoLists', orderBy: ['lastOpened','desc']},
     ]),
 )(HomeScreen);

@@ -13,11 +13,14 @@ const todoListReducer = (state = initState, action) => {
         /* IF YOU HAVE ANY TODO LIST EDITING REDUCERS ADD THEM HERE */
         case "ADD_NEW_LIST":
             const fireStore=getFirestore();
+            const dt=new Date();
+            const x=dt.toUTCString();
             fireStore.collection('todoLists').add({
                 "key":0,
                 "name": "UNKNOWN",
                 "owner": "",
-                "items": []
+                "items": [],
+                "lastOpened": {x}
             }).then(x=>{
                 console.log("!"+x.id);
                 action.history.push('/todoList/'+x.id);
