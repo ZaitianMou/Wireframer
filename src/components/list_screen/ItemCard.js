@@ -50,7 +50,7 @@ class ItemCard extends React.Component {
                 </div>
                 <div className="small-4 columns toolbar">
                     <div className="fab">
-                        <div className="btn-floating red ">
+                        <div className="btn-floating green">
                             <i className="material-icons">more_horiz</i>
                         </div>
 
@@ -60,7 +60,7 @@ class ItemCard extends React.Component {
                                 <li><a className="btn-floating green" onClick={(event) => this.moveDown(event, id, todoList, item)}><i className="material-icons">arrow_downward</i></a></li>
                                 <li><a className="btn-floating red" onClick={(event) => this.delete(event, id, todoList, item)}><i className="material-icons">close</i></a></li>
                                 <Link to={'/todoList/' + id +'/edit/' + index} id={id} index={index} item={item}>
-                                    <li><a className="btn-floating red"><i className="material-icons">edit</i></a></li>
+                                    <li><a className="btn-floating yellow"><i className="material-icons">edit</i></a></li>
                                 </Link>
                             </div>
                         </div>

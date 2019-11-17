@@ -72,7 +72,7 @@ div.banner {
   left: 30%;
 }
 .list_item_status_header, .list_item_card_completed, .list_item_card_not_completed {
-  left: 53%;
+  left: 47%;
 }
 .list_item_card_toolbar {
   position: absolute;

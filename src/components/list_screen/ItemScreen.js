@@ -5,37 +5,23 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { getFirestore } from 'redux-firestore';
 import { Link } from 'react-router-dom';
+import { Checkbox } from 'react-materialize';
 
 class ItemScreen extends Component {
-    
+
     state = {
         name: '',
         owner: '',
     }
 
     render() {
-        console.log(">>>>>");
-        const index= this.props.match.params.index;
-        const id=this.props.match.params.id;
-       
-        //const item=this.props.item;
-
-        console.log(id);
-        console.log(index);
-        
+        const index = this.props.match.params.index;
+        const id = this.props.match.params.id;
         if (index >= 0) {
-            const fireStore=getFirestore();
-            fireStore.collection('todoLists').doc(id).get().then(doc=>{
-                const data=doc.data().items;
-                console.log(doc);
-                console.log(data);
-                
-                window.item=data;
-            })
-            var des=window.item[index].description;
-            var ass=window.item[index].assigned_to;
-            var due=window.item[index].due_date;
-            var com=window.item[index].completed;
+            var des = this.props.todoList.items[index].description
+            var ass = this.props.todoList.items[index].assigned_to;
+            var due = this.props.todoList.items[index].due_date;
+            var com = this.props.todoList.items[index].completed;
         }
         else {
             var des = "";
@@ -43,51 +29,119 @@ class ItemScreen extends Component {
             var due = "";
             var com = "";
         }
-        console.log(des+".."+ass+".."+due+".."+com)
         return (
-            <div id="item_edit_screen" >
-                Item<br></br>
+            <div>
+                <form className="col s12">
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <p id="item_description_prompt">Description:</p>
+                            <input type="text" name="Description" id="newDescription" defaultValue={des} />
+                        </div>
+                    </div>
 
-                <p id="item_description_prompt">Description:</p>  <input type="text" name="Description" id="newDescription" defaultValue={des} />
-                <p id="item_assigned_to_prompt">Assigned To: </p> <input type="text" name="AssignedTo" id="newAssignedTo" defaultValue={ass} />
-                <p id="item_due_date_prompt">Due Date:</p>  <input type="date" name="DueDate" id="newDueDate" defaultValue={due} />
-                
-                <p id="item_completed_prompt">Completed: </p> <input type="checkbox" class="filled-in" checked="checked" id="newCompleted" defaultChecked={com} />
-                <button id="item_edit_screen_submit_button" className="button" onClick={this.handleSubmit}>Submit</button>
-                <button id="item_edit_screen_cancel_button" className="button" onClick={this.handleCancel}>Cancel</button>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <p id="item_assigned_to_prompt">Assigned To: </p>
+                            <input type="text" name="AssignedTo" id="newAssignedTo" defaultValue={ass} />
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <p id="item_due_date_prompt">Due Date:</p>
+                            <input type="date" name="DueDate" id="newDueDate" defaultValue={due} />
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <p id="item_completed_prompt">Completed: </p>
+                            <br></br>
+                            <Checkbox  id="newCompleted" onChange={()=>com=!com}/>
+                            {/* <input type="checkbox" className="filled-in" checked="checked" id="newCompleted" defaultChecked={com} /> */}
+                        </div>
+                    </div>
+
+                </form>
+                <Link to={"/todoList/" + id}>
+                    <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => this.editItem(id, index)}>Submit
+                        <i className="material-icons right">send</i>
+                    </button>
+                </Link>
+                <Link to={"/todoList/" + id}>
+                    <button className="btn waves-effect waves-light" type="submit" name="action">Cancel
+                        <i className="material-icons right"></i>
+                    </button>
+                </Link>
             </div>
         )
+    }
+    editItem = (id, index) => {
 
+        var newDescription = document.getElementById("newDescription").value;
+        var newAssignedTo = document.getElementById("newAssignedTo").value;
+        var newDueDate = document.getElementById("newDueDate").value;
+        var newCompleted = document.getElementById("newCompleted").checked;
+
+        if (index >= 0) {
+            //when editting item
+            const fireStore = getFirestore();
+            const todoList = fireStore.collection("todoLists").doc(id);
+            todoList.get().then(doc => {
+                const data = doc.data().items;
+                data[index].description = newDescription;
+                data[index].assigned_to = newAssignedTo;
+                data[index].due_date = newDueDate;
+                data[index].completed = newCompleted;
+
+                todoList.update({
+                    "items": [...data]
+                })
+            });
+        }
+        else {
+            //when creating new item
+            const fireStore = getFirestore();
+            const todoList = fireStore.collection("todoLists").doc(id);
+            todoList.get().then(doc => {
+                const data = doc.data().items;
+                data.push({
+                    'description': newDescription,
+                    'assigned_to': newAssignedTo,
+                    'due_date': newDueDate,
+                    'completed': newCompleted
+                })
+                todoList.update({
+                    "items": [...data]
+                })
+            });
+
+        }
     }
 }
 
-
-
-
-
-
-const mapDispatchToProps=(dispatch)=>{
+const mapDispatchToProps = (dispatch) => {
     return {
         //deleteItem:(x,y,z)=>{dispatch(deleteItem(x,y,z))},
     }
 }
 const mapStateToProps = (state, ownProps) => {
-   
+
     const { id } = ownProps.match.params;
     const { todoLists } = state.firestore.data;
     const todoList = todoLists ? todoLists[id] : null;
-    if(todoList)
-    todoList.id = id;
-     
+    if (todoList)
+        todoList.id = id;
+
     return {
-      todoList,
-      auth: state.firebase.auth,
+        todoList: todoLists[id],
+        auth: state.firebase.auth,
     };
-  };
-  
-  export default compose(
-    connect(mapStateToProps,mapDispatchToProps),
+};
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
-      { collection: 'todoLists' },
+        { collection: 'todoLists' },
     ]),
-  )(ItemScreen);
+)(ItemScreen);

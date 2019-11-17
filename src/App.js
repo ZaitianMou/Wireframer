@@ -31,7 +31,7 @@ class App extends Component {
               <Route path="/login" component={LoginScreen} />
               <Route exact path="/todoList/:id" component={ListScreen} />
               <Route exact path="/todoList/:id/edit/:index" component={ItemScreen}/>
-              <Route path="todoList/:id/newItem" component={ItemScreen} />
+              <Route exact path="/todoList/:id/newItem" component={ItemScreen} />
               
 
               <Route path="/:any" component={HomeScreen} />
