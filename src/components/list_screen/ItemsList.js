@@ -39,7 +39,7 @@ class ItemsList extends React.Component {
                             item.id = item.key;
                             return (
                                 <tr>
-                                    <td colSpan="4">
+                                    <td colSpan="4"  className="grey">
                                         <ItemCard todoList={todoList} item={item} id={todoList.id} />
                                     </td>
                                 </tr>

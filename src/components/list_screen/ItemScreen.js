@@ -30,7 +30,7 @@ class ItemScreen extends Component {
             var com = "";
         }
         return (
-            <div>
+            <div className="container">
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
@@ -47,29 +47,30 @@ class ItemScreen extends Component {
                     </div>
 
                     <div className="row">
-                        <div className="input-field col s12">
+                        <div className="input-field col s6">
                             <p id="item_due_date_prompt">Due Date:</p>
                             <input type="date" name="DueDate" id="newDueDate" defaultValue={due} />
                         </div>
                     </div>
 
                     <div className="row">
-                        <div className="input-field col s12">
+                        <div className="input-field col s6">
                             <p id="item_completed_prompt">Completed: </p>
-                            <br></br>
-                            <Checkbox  id="newCompleted" onChange={()=>com=!com}/>
-                            {/* <input type="checkbox" className="filled-in" checked="checked" id="newCompleted" defaultChecked={com} /> */}
+                            <div id="inputForCheckbox">
+                                <Checkbox id="newCompleted" onChange={() => com = !com} />
+                                {/* <input type="checkbox" className="filled-in" checked="checked" id="newCompleted" defaultChecked={com} /> */}
+                            </div>
                         </div>
                     </div>
 
                 </form>
                 <Link to={"/todoList/" + id}>
-                    <button className="btn waves-effect waves-light" type="submit" name="action" onClick={() => this.editItem(id, index)}>Submit
+                    <button id="submit_in_item_screen" className="btn waves-effect waves-light" type="submit" name="action" onClick={() => this.editItem(id, index)}>Submit
                         <i className="material-icons right">send</i>
                     </button>
                 </Link>
                 <Link to={"/todoList/" + id}>
-                    <button className="btn waves-effect waves-light" type="submit" name="action">Cancel
+                    <button id="cancel_in_item_screen" className="btn waves-effect waves-light" type="submit" name="action">Cancel
                         <i className="material-icons right"></i>
                     </button>
                 </Link>

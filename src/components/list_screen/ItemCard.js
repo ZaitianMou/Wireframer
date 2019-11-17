@@ -29,7 +29,7 @@ class ItemCard extends React.Component {
         return (
             <div className="card z-depth-0 todo-list-link pink-lighten-3">
 
-                <div className="card-content grey-text text-darken-3">
+                <div className="card-content grey-text text-darken-3 grey">
                     {/* <span className="card-title">{item.description}</span>
                     <span className="card-title">{item.due_date}</span> */}
                     <div className='list_item_card_description'>

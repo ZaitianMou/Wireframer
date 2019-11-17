@@ -105,3 +105,57 @@ top: 0%;
   left: 72%;
   top: 9%;
 }
+
+#newDescription {
+  position: absolute;
+  top: 20%;
+  left: 30%;
+}
+#item_description_prompt{
+  position: absolute;
+  top:50%;
+}
+#newAssignedTo{
+  position: absolute;
+  left:30%;
+}
+
+#item_assigned_to_prompt{
+  position: absolute;
+  top:50%;
+}
+
+#newDueDate{
+  position: absolute;
+  left:30%;
+}
+
+#item_due_date_prompt{
+  position: absolute;
+  top:50%;
+}
+#newCompleted{
+  position: absolute;
+  left:30%;
+}
+
+#item_completed_prompt{
+  position: absolute;
+  top:10%;
+}
+
+#submit_in_item_screen{
+  position: absolute;
+  left: 10%;
+  top: 72%;
+}
+#cancel_in_item_screen{
+  position: absolute;
+  left: 35%;
+  top: 72%;
+}
+#inputForCheckbox {
+  position: relative;
+  left: 40%;
+  top: 50%;
+}

@@ -12,8 +12,6 @@ import { editListOwner } from '../../store/actions/actionCreators';
 import { addItem } from '../../store/actions/actionCreators';
 import { Button, Icon, Modal } from 'react-materialize';
 
-import { bindActionCreators } from 'redux';
-
 class ListScreen extends Component {
     state = {
         name: '',
@@ -45,11 +43,11 @@ class ListScreen extends Component {
             'lastOpened': { x }
         });
         return (
-            <div className="container white">
+            <div className="container">
                 <div>
                     <h5 className="grey-text text-darken-3">Todo List</h5>
                     <div>
-                        <Button href="#modal1" className="modal-trigger red modal_delete_list">
+                        <Button href="#modal1" className="modal-trigger red modal_delete_list waves-effect waves-light">
                             <i className="material-icons">delete_forever</i>
                         </Button>
 

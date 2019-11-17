@@ -28,6 +28,7 @@ class HomeScreen extends Component {
                         <TodoListLinks />
                     </div>
 
+
                     <div className="col s8">
                         <div className="banner">
                             @todo<br />

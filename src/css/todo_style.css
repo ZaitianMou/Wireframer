@@ -19,8 +19,11 @@ body {
 }
 
 div.banner {
+  /* background-image: linear-gradient(to bottom,         
+  #b8b808, #636723); */
   background-image: linear-gradient(to bottom,         
-  #b8b808, #636723);
+  #87CEFA,  	 	#E6E6FA);
+
   color: white;
   font-size: 48pt;
   border-color: black;
@@ -101,4 +104,7 @@ th{
 }
 .descriptio_deader{
   text-align: center;
+}
+.container{
+  background-color:rgb(216, 214, 214)
 }
