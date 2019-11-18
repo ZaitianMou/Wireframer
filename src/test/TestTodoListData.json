@@ -4,7 +4,7 @@
             "key": 0,
             "name": "Things I am Never Gonna Do",
             "owner": "Rick Astley",
-            "lastOpened":"2019-11-13",
+            "lastOpened":null,
             "items": [
                 {
                     "key": 0,
@@ -33,7 +33,7 @@
             "key": 1,
             "name": "House Repairs",
             "owner": "Bob Vila",
-            "lastOpened":"2019-11-13",
+            "lastOpened":null,
             "items": [
                 {
                     "key": 0,
@@ -76,7 +76,7 @@
             "key": 2,
             "name": "Courses to Take",
             "owner": "Joe Student",
-            "lastOpened":"2019-11-13",
+            "lastOpened":null,
             "items": [
                 {
                     "key": 0,

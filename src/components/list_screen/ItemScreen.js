@@ -57,8 +57,10 @@ class ItemScreen extends Component {
                         <div className="input-field col s6">
                             <p id="item_completed_prompt">Completed: </p>
                             <div id="inputForCheckbox">
-                                <Checkbox id="newCompleted" onChange={() => com = !com} />
-                                {/* <input type="checkbox" className="filled-in" checked="checked" id="newCompleted" defaultChecked={com} /> */}
+                                <label>
+                                <input type="checkbox" className="filled-in" defaultChecked={com} id="newCompleted"/>
+                                <span></span>
+                                </label>
                             </div>
                         </div>
                     </div>

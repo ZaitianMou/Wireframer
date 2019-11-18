@@ -71,19 +71,31 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   color: red;
   
 }
+
+@keyframes animateIn {
+  from {opacity: 0;}
+  to {opacity: 1}
+}
+
 .button {
   display:none;
+  direction:left;
+
 }
 .fab:hover .button{
   display: inline-block;
+  animation-name: animateIn;
+   animation-duration: 1.5s;
+   animation-timing-function: linear;
 }
 #wrapper {
+  
   display: flex;
 }
 
 .toolbar{
   position: absolute;
-  left: 63%;
+  left: 58%;
   top: 5%;
 }
 .submit_button_in_modal{
@@ -139,23 +151,33 @@ top: 0%;
   left:30%;
 }
 
-#item_completed_prompt{
-  position: absolute;
-  top:10%;
+#item_completed_prompt {
+  position: relative;
+  top: 12%;
+  width: 20%;
 }
 
 #submit_in_item_screen{
-  position: absolute;
+  position: static;
   left: 10%;
   top: 72%;
 }
 #cancel_in_item_screen{
-  position: absolute;
+  position: relative;
   left: 35%;
   top: 72%;
 }
+
+
 #inputForCheckbox {
-  position: relative;
+  position: absolute;
   left: 40%;
-  top: 50%;
+  top: 30%;
+}
+
+#modal1{
+  background-color:rgb(216, 214, 214)
+}
+#xxx{
+  background-color:rgb(216, 214, 214)
 }
