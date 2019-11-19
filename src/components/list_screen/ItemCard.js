@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Button, Icon} from 'react-materialize';
 
 
 
@@ -66,6 +67,16 @@ class ItemCard extends React.Component {
                         </div>
                     </div>
                 </div>
+                {/* <Button
+                    floating
+                    fab={{direction: 'left'}}
+                    className="red"
+                    >
+                    <Button floating icon={<Icon />} className="red" />
+                    <Button floating icon={<Icon />} className="yellow darken-1" />
+                    <Button floating icon={<Icon />} className="green" />
+                    <Button floating icon={<Icon />} className="green" />
+                </Button> */}
             </div>
         );
     }

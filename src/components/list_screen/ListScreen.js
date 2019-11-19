@@ -40,7 +40,7 @@ class ListScreen extends Component {
 
         const fireStore = getFirestore();
         fireStore.collection('todoLists').doc(todoList.id).update({
-            'lastOpened': { dt }
+            'lastOpened': { x}
         });
         return (
             <div className="container">
