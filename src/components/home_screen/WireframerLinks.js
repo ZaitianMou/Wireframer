@@ -2,17 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import TodoListCard from './TodoListCard';
+import WireframerCard from './WireframerCard';
 
 class TodoListLinks extends React.Component {
     render() {
-        const todoLists = this.props.todoLists;
-        console.log(todoLists);
+        const wireframers = this.props.wireframers;
+        // console.log(todoLists);
         return (
             <div className="todo-lists section">
-                {todoLists && todoLists.map(todoList => (
-                    <Link to={'/todoList/' + todoList.id} key={todoList.id}>
-                        <TodoListCard todoList={todoList} />
+                {wireframers && wireframers.map(wireframer => (
+                    <Link to={'/wireframer/' + wireframer.id} key={wireframer.id}>
+                        <WireframerCard wireframer={wireframer} />
                     </Link>
                 ))}
             </div>
@@ -22,7 +22,7 @@ class TodoListLinks extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        todoLists: state.firestore.ordered.todoLists,
+        wireframers: state.firestore.ordered.todoLists,
         auth: state.firebase.auth,
     };
 };

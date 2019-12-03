@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import ItemsList from './ItemsList.js'
 import { getFirestore } from 'redux-firestore';
 import { firestoreConnect } from 'react-redux-firebase';
 
@@ -12,12 +11,11 @@ import { editListOwner } from '../../store/actions/actionCreators';
 import { addItem } from '../../store/actions/actionCreators';
 import { Button, Icon, Modal } from 'react-materialize';
 
-class ListScreen extends Component {
+class WireframerScreen extends Component {
     state = {
         name: '',
         owner: '',
     }
-
     // handleChange = (e,editionType) => {
     //     const { target } = e;
     //     // this.setState(state => ({
@@ -81,7 +79,6 @@ class ListScreen extends Component {
                     <label htmlFor="password" className="active">Owner</label>
                     <input className="active" value={todoList.owner} type="text" name="owner" id="owner" onChange={(event) => this.props.editListOwner(this.props.todoList.id, event.target.value)} />
                 </div>
-                <ItemsList todoList={todoList} />
 
             </div>
         );
@@ -118,4 +115,4 @@ export default compose(
     firestoreConnect([
         { collection: 'todoLists' },
     ]),
-)(ListScreen);
+)(WireframerScreen);
