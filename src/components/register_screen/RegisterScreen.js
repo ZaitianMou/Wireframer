@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, getFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { registerHandler } from '../../store/database/asynchHandler'
+import firebase from '../../config/firebaseConfig';
 
 class RegisterScreen extends Component {
   state = {
@@ -23,13 +24,21 @@ class RegisterScreen extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
+    
+    firebase.auth().createUserWithEmailAndPassword("z@gmail.com", "111111").catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
 
-    const { props, state } = this;
-    const { firebase } = props;
-    const newUser = { ...state };
+    // e.preventDefault();
 
-    props.register(newUser, firebase);
+    // const { props, state } = this;
+    // const { firebase } = props;
+    // const newUser = { ...state };
+
+    // props.register(newUser, firebase);
   }
 
   render() {

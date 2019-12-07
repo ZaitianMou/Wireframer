@@ -4,7 +4,6 @@ import { compose } from 'redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import WireframerLinks from './WireframerLinks';
-import {addList} from '../../store/actions/actionCreators';
 import { Link } from 'react-router-dom';
 
 class HomeScreen extends Component {
@@ -47,7 +46,6 @@ class HomeScreen extends Component {
 
 const mapDispatchToProps=(dispatch)=>{
     return {
-        addList:(x)=>{dispatch(addList(x))}
     }
 }
 

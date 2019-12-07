@@ -4,27 +4,20 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getFirestore } from 'redux-firestore';
 import { firestoreConnect } from 'react-redux-firebase';
-
-import { deleteList } from '../../store/actions/actionCreators';
-import { editListName } from '../../store/actions/actionCreators';
-import { editListOwner } from '../../store/actions/actionCreators';
-import { addItem } from '../../store/actions/actionCreators';
-import { Button, Icon, Modal } from 'react-materialize';
+import DragResizeContainer from 'react-drag-resize';
+import Moveable from "react-moveable";
 
 class WireframerScreen extends Component {
     state = {
         name: '',
         owner: '',
     }
-    // handleChange = (e,editionType) => {
-    //     const { target } = e;
-    //     // this.setState(state => ({
-    //     //     ...state,
-    //     //     [target.id]: target.value,
-    //     // }));
-    // }
-
     render() {
+        const layout = [{ key: 'test', x: 0, y: 0, width: 200, height: 100, zIndex: 1 }]
+        const canResizable = (isResize) => {
+            return { top: isResize, right: isResize, bottom: isResize, left: isResize, topRight: isResize, bottomRight: isResize, bottomLeft: isResize, topLeft: isResize };
+        };
+
         const auth = this.props.auth;
         const todoList = this.props.todoList;
         if (!auth.uid) {
@@ -38,48 +31,76 @@ class WireframerScreen extends Component {
 
         const fireStore = getFirestore();
         fireStore.collection('todoLists').doc(todoList.id).update({
-            'lastOpened': { x}
+            'lastOpened': { x }
         });
         return (
-            <div className="container">
-                <div>
-                    <h5 className="grey-text text-darken-3">Todo List</h5>
-                    <div>
-                        <Button href="#modal1" className="modal-trigger red modal_delete_list waves-effect waves-light">
-                            <i className="material-icons">delete_forever</i>
-                        </Button>
+            <div>
+                <div className="row outContainer">
+                    <div className="col s2">
+                        <div className="zoomAndSaveSection">
+                            <i className="material-icons">zoom_in</i>
+                            <i className="material-icons">zoom_out</i>
+                            <p className="save_button" onClick={() => console.log("Save")}>Save</p>
+                            <p className="close_button" onClick={() => console.log("Cancel")}>Close</p>
+                        </div>
+                        <div className="divider"></div>
+                        <div className="add_element_section">
 
-                        <Link to={'/todoList/' + todoList.id+'/newItem'}>
-                            {/* <Button onClick={() => this.props.addItem(this.props.todoList.id, this.props.todoList)} */}
-                            <Button className="green button_add_item">
-                                <i className="material-icons">add_circle</i>
-                            </Button>
-                        </Link>
+                            <p>Container</p>
+                            <p>Prompt for input</p>
+                            <p>Label</p>
 
+                            <button>Submit</button>
+                            <p>Button</p>
 
-                        <Modal id="modal1" header="Delete List?">
-                            Are you sure you would like to delete the list????
-                        <br></br>
-                            <b>Note: it's not undoable.</b>
-                            <Link to="/" >
-                                <Button className="submit_button_in_modal red" onClick={() => this.props.deleteList(todoList.id)}>
-                                    <i>Yes</i>
-                                </Button>
-                            </Link>
-                        </Modal>
+                            <i className="material-icons">text_fields</i>
+                            <p>Textfield</p>
+
+                        </div>
+
                     </div>
+                    <div className="col s7">
+                        {/* <DragResizeContainer
+                            className='resize-container'
+                            resizeProps={{
+                                minWidth: 10,
+                                minHeight: 10,
+                                enable: canResizable(isResize)
+                            }}
+                            onDoubleClick={()=>alert("click!!!")}
+                            layout={layout}
+                            dragProps={{ disabled: false }}
+                            onLayoutChange={()=>alert("layerout change!!!")}
+                            scale={scale}
+                        >
+                        {layout.map((single) => {
+                            return (
+                                <div key={single.key} className='child-container size-auto border'>text test</div>
+                            );
+                        })}
+                        ></DragResizeContainer> */}
+                    
+                        <p className="resizeable">
+                            yoooooo!
+                        </p>
+                       
+                         {/* <Moveable
+                            target={document.querySelector(".resizable")}
+                            resizable={true}
+                            throttleResize={0}
+                            keepRatio={true}
+                            onResize={({ target, width, height, dist }) => {
+                                console.log(width, height, dist);
+                                target.style.width = width + "px";
+                                target.style.height = height + "px";
+                            }}
+                        /> */}
+                    </div>
+                    <div className="col s3">
 
-                </div>
 
-                <div className="input-field">
-                    <label htmlFor="email" className="active">Name</label>
-                    <input className="active" value={todoList.name} type="text" name="name" id="name" onChange={(event) => this.props.editListName(this.props.todoList.id, event.target.value)} />
+                    </div>
                 </div>
-                <div className="input-field">
-                    <label htmlFor="password" className="active">Owner</label>
-                    <input className="active" value={todoList.owner} type="text" name="owner" id="owner" onChange={(event) => this.props.editListOwner(this.props.todoList.id, event.target.value)} />
-                </div>
-
             </div>
         );
     }
@@ -87,10 +108,7 @@ class WireframerScreen extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteList: (id) => { dispatch(deleteList(id)) },
-        editListName: (x, y) => { dispatch(editListName(x, y)) },
-        editListOwner: (x, y) => { dispatch(editListOwner(x, y)) },
-        addItem: (id, y) => { dispatch(addItem(id, y)) }
+        //     deleteList: (id) => { dispatch(deleteList(id)) },
     }
 }
 

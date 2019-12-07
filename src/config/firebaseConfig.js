@@ -5,15 +5,15 @@ import 'firebase/auth';
 // THIS IS USED TO INITIALIZE THE firebase OBJECT
 // PUT YOUR FIREBASE PROJECT CONFIG STUFF HERE
 var firebaseConfig = {
-    apiKey: "AIzaSyDeID-lO4L3Shfte_4KzvQdbM83PBaAkf8",
-    authDomain: "cse316-hw3-18591.firebaseapp.com",
-    databaseURL: "https://cse316-hw3-18591.firebaseio.com",
-    projectId: "cse316-hw3-18591",
-    storageBucket: "cse316-hw3-18591.appspot.com",
-    messagingSenderId: "836754694063",
-    appId: "1:836754694063:web:b54c2a4ca55f9d0689995a",
-    measurementId: "G-NF6QQWD6XM"
-};
+    apiKey: "AIzaSyA8LpuAcnxGFYKxFPJDPvUHLHvtpDb6P9Y",
+    authDomain: "wireframer-79f37.firebaseapp.com",
+    databaseURL: "https://wireframer-79f37.firebaseio.com",
+    projectId: "wireframer-79f37",
+    storageBucket: "wireframer-79f37.appspot.com",
+    messagingSenderId: "909375561441",
+    appId: "1:909375561441:web:eb570c72824c2b9416a1a0",
+    measurementId: "G-9HKZVXRYJL"
+  };
 firebase.initializeApp(firebaseConfig);
 
 // NOW THE firebase OBJECT CAN BE CONNECTED TO THE STORE

@@ -1,0 +1,96 @@
+{
+	"users":[
+		{
+			"name": "Zaitian Mou",
+			"whetherAdministrator": true,
+			"wireframes":[
+				{
+					"name": "Default Wireframe",
+					"dimension": 100,
+					"controls":[
+						{
+							"control_type":"label",
+							"x_coordinate": 0,
+							"y-coordinate": 0,
+							"size": 10,
+							"text": "This is a label.",
+							"text_font_size":12,
+							"color":"white",
+							"border": 2
+						},
+						{
+							"control_type":"button",
+							"x_coordinate": 20,
+							"y-coordinate": 20,
+							"size": 10,
+							"text": "This is a button.",
+							"text_font_size":12,
+							"color":"white",
+							"border": 2
+						},
+						{
+							"control_type":"textfield",
+							"x_coordinate": 50,
+							"y-coordinate": 50,
+							"size": 10,
+							"text": "This is a textfield.",
+							"text_font_size":12,
+							"color":"white",
+							"border": 2
+						}
+					]
+
+
+				},
+
+				{
+					"name": "Second Default Wireframe",
+					"dimension": 100,
+					"controls":[
+						{
+							"control_type":"label",
+							"x_coordinate": 10,
+							"y-coordinate": 10,
+							"size": 10,
+							"text": "It only has this label",
+							"text_font_size":12,
+							"color":"white",
+							"border": 2
+						}
+					]
+
+				}
+
+			]
+		},
+
+		{
+			"name": "Nobody",
+			"whetherAdministrator": false,
+			"wireframes":[
+				{
+					"name": "Nobody's mundane Wireframe",
+					"dimension": 100,
+					"controls":[
+						{
+							"control_type":"label",
+							"x_coordinate": 0,
+							"y-coordinate": 0,
+							"size": 10,
+							"text": "This is a label.",
+							"text_font_size":12,
+							"color":"white",
+							"border": 2
+						}
+						
+					]
+
+
+				}
+
+			]
+		}
+
+	]
+
+}

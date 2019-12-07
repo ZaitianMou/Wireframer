@@ -58,126 +58,26 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   margin-bottom: 0;
   z-index: 997;
 }
-.item_delete_button{
-  src:'../../images/delete.png',
-}
-#list_trash {
-  position: relative;
-  left: 70%;
-  width: 20%;
-  top: 5%;
-}
-.redForStatus{
-  color: red;
-  
+
+/* I wrote below */
+.outContainer{
+  border-style: ridge;
 }
 
-@keyframes animateIn {
-  from {opacity: 0;}
-  to {opacity: 1}
+.zoomAndSaveSection{
+  border-style: ridge;
 }
-
-.button {
-  display:none;
-  direction:left;
-
-}
-.fab:hover .button{
-  display: inline-block;
-  animation-name: animateIn;
-   animation-duration: 1.5s;
-   animation-timing-function: linear;
-}
-#wrapper {
-  
-  display: flex;
-}
-
-.toolbar{
+.save_button{
   position: absolute;
-  left: 63%;
-  top: 5%;
+  top: 10%;
+  left: 7.5%;
 }
-.submit_button_in_modal{
+.close_button{
   position: absolute;
-  left:5%;
-  top:75%;
+  top: 10%;
+  left: 11.3%;
 }
 
-.modal_delete_list{
-  /* position: absolute;
-  left: 78%;
-  top: 10%; */
-  position: relative;
-  left: 91%;
-top: 0%;
-}
-.button_add_item{
-  position:relative;
-  left: 72%;
-  top: 9%;
-}
-
-#newDescription {
-  position: absolute;
-  top: 20%;
-  left: 30%;
-}
-#item_description_prompt{
-  position: absolute;
-  top:50%;
-}
-#newAssignedTo{
-  position: absolute;
-  left:30%;
-}
-
-#item_assigned_to_prompt{
-  position: absolute;
-  top:50%;
-}
-
-#newDueDate{
-  position: absolute;
-  left:30%;
-}
-
-#item_due_date_prompt{
-  position: absolute;
-  top:50%;
-}
-#newCompleted{
-  position: absolute;
-  left:30%;
-}
-
-#item_completed_prompt {
-  position: relative;
-  top: 12%;
-  width: 20%;
-}
-
-#submit_in_item_screen{
-  position: static;
-  left: 10%;
-  top: 72%;
-}
-#cancel_in_item_screen{
-  position: relative;
-  left: 35%;
-  top: 72%;
-}
-
-
-#inputForCheckbox {
-  position: absolute;
-  left: 40%;
-  top: 30%;
-}
-
-#modal1{
-  background-color:rgb(216, 214, 214)
-}
-#xxx{
-  background-color:rgb(216, 214, 214)
+.add_element_section{
+  border-style: ridge;
 }
