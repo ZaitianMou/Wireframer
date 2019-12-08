@@ -24,21 +24,14 @@ class RegisterScreen extends Component {
   }
 
   handleSubmit = (e) => {
-    
-    firebase.auth().createUserWithEmailAndPassword("z@gmail.com", "111111").catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-    });
 
-    // e.preventDefault();
+    e.preventDefault();
 
-    // const { props, state } = this;
-    // const { firebase } = props;
-    // const newUser = { ...state };
+    const { props, state } = this;
+    const { firebase } = props;
+    const newUser = { ...state };
 
-    // props.register(newUser, firebase);
+    props.register(newUser, firebase);
   }
 
   render() {

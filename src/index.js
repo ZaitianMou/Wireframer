@@ -2,8 +2,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './css/todo_layout.css'
-import './css/todo_style.css'
+import './css/wireframers_layout.css'
+import './css/wireframers_style.css'
 import * as serviceWorker from './serviceWorker';
 
 import ReactReduxFirebaseApp from './store/ReactReduxFirebaseApp'

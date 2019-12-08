@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux';
 import wireframeJson from './TestWireframeData.json'
 import { getFirestore } from 'redux-firestore';
-
+import { registerHandler } from '../store/database/asynchHandler';
+import firebase from '../config/firebaseConfig';
 class DatabaseTester extends React.Component {
 
     // NOTE, BY KEEPING THE DATABASE PUBLIC YOU CAN
@@ -20,15 +21,39 @@ class DatabaseTester extends React.Component {
 
     handleReset = () => {
         //i added to clear first
-         const fireStore = getFirestore();
-        
-        wireframeJson.users.forEach(wireframeJson => {
-            fireStore.collection('users').add(wireframeJson).then(() => {
-                    console.log("DATABASE RESET");
-                }).catch((err) => {
-                    console.log(err);
-                });
+        const firestore = getFirestore();
+        wireframeJson.users.forEach(user=>{
+            firebase.auth().createUserWithEmailAndPassword(
+                user.email,
+                "111111"
+            ).then(resp => firestore.collection('users').doc(resp.user.uid).set(user))
+            .catch((err) => {
+                console.log(err);
+            });
         });
+        
+        // wireframeJson.users.forEach(user => {
+        //     fireStore.collection('users').add(user).then(() => {
+        //             console.log("DATABASE RESET");
+        //             // add a authentication account
+        //             firebase.auth().createUserWithEmailAndPassword(
+        //                 user.email,
+        //                 "111111"
+        //             )
+        //                 // const newUser={
+        //                 //     email: user.email,
+        //                 //     password: '111111',
+        //                 //     firstName: user.first_name,
+        //                 //     lastName: user.last_name,
+        //                 //     initials: user.initials,
+        //                 //   };
+        //                 // this.props.register(newUser, firebase);
+                    
+        //         }).catch((err) => {
+        //             console.log(err);
+        //         });
+        // });
+
     }
 
     render() {
@@ -46,5 +71,8 @@ const mapStateToProps = function (state) {
         firebase: state.firebase
     };
 }
+const mapDispatchToProps = dispatch => ({
+    register: (newUser, firebase) => dispatch(registerHandler(newUser, firebase)),
+  });
 
-export default connect(mapStateToProps)(DatabaseTester);
+export default connect(mapStateToProps,mapDispatchToProps)(DatabaseTester);

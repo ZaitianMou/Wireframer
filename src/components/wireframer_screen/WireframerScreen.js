@@ -13,26 +13,26 @@ class WireframerScreen extends Component {
         owner: '',
     }
     render() {
+        
         const layout = [{ key: 'test', x: 0, y: 0, width: 200, height: 100, zIndex: 1 }]
         const canResizable = (isResize) => {
             return { top: isResize, right: isResize, bottom: isResize, left: isResize, topRight: isResize, bottomRight: isResize, bottomLeft: isResize, topLeft: isResize };
         };
 
         const auth = this.props.auth;
-        const todoList = this.props.todoList;
         if (!auth.uid) {
             return <Redirect to="/" />;
         }
-        if (!todoList)
-            return <React.Fragment />
-
-        const dt = new Date();
-        const x = dt.toUTCString();
-
-        const fireStore = getFirestore();
-        fireStore.collection('todoLists').doc(todoList.id).update({
-            'lastOpened': { x }
-        });
+        const index=this.props.match.params.index;
+        console.log("index in wireframerScreen "+index);
+        // if (!todoList)
+        //     return <React.Fragment />
+        // const dt = new Date();
+        // const x = dt.toUTCString();
+        // const fireStore = getFirestore();
+        // // fireStore.collection('todoLists').doc(todoList.id).update({
+        //     'lastOpened': { x }
+        // });
         return (
             <div>
                 <div className="row outContainer">

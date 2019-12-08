@@ -63,8 +63,8 @@ class LoginScreen extends Component {
           </form>
 
           <div className="col s8 banner">
-            @todo<br />
-            List Maker
+            Welcome to <br />
+            Wireframers
           </div>
         </div>
       </div>

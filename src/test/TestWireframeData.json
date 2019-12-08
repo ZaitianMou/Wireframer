@@ -1,11 +1,14 @@
 {
 	"users":[
 		{
-			"name": "Zaitian Mou",
-			"whetherAdministrator": true,
-			"wireframes":[
+			"first_name": "Zaitian",
+			"last_name":"Mou",
+			"email":"zaitian.mou@stonybrook.edu",
+			"whetherAdministrator": false,
+			"initials":"zm",
+			"wireframers":[
 				{
-					"name": "Default Wireframe",
+					"name": "Default Wireframer",
 					"dimension": 100,
 					"controls":[
 						{
@@ -44,7 +47,7 @@
 				},
 
 				{
-					"name": "Second Default Wireframe",
+					"name": "Second Default Wireframer",
 					"dimension": 100,
 					"controls":[
 						{
@@ -58,33 +61,6 @@
 							"border": 2
 						}
 					]
-
-				}
-
-			]
-		},
-
-		{
-			"name": "Nobody",
-			"whetherAdministrator": false,
-			"wireframes":[
-				{
-					"name": "Nobody's mundane Wireframe",
-					"dimension": 100,
-					"controls":[
-						{
-							"control_type":"label",
-							"x_coordinate": 0,
-							"y-coordinate": 0,
-							"size": 10,
-							"text": "This is a label.",
-							"text_font_size":12,
-							"color":"white",
-							"border": 2
-						}
-						
-					]
-
 
 				}
 

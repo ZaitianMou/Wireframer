@@ -5,7 +5,8 @@ class WireframerCard extends React.Component {
 
     render() {
         const { wireframer } = this.props;
-        // console.log("TodoListCard, todoList.id: " + wireframer.id);
+        console.log("wireframer");
+        console.log("WireframerCard, wireframer.name: " + wireframer.name);
         return (
             <Row>
                 <Col m={12} s={12}>
