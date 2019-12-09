@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { getFirestore } from 'redux-firestore';
 import { firestoreConnect } from 'react-redux-firebase';
+import {getFirebase ,getFirestore} from 'react-redux-firebase';
 import DragResizeContainer from 'react-drag-resize';
 import Moveable from "react-moveable";
+import firebase from "../../config/firebaseConfig";
 
 class WireframerScreen extends Component {
     state = {
@@ -14,6 +15,9 @@ class WireframerScreen extends Component {
     }
     render() {
         
+        if (this.props.users==undefined)
+            return <React.Fragment />
+
         const layout = [{ key: 'test', x: 0, y: 0, width: 200, height: 100, zIndex: 1 }]
         const canResizable = (isResize) => {
             return { top: isResize, right: isResize, bottom: isResize, left: isResize, topRight: isResize, bottomRight: isResize, bottomLeft: isResize, topLeft: isResize };
@@ -25,14 +29,39 @@ class WireframerScreen extends Component {
         }
         const index=this.props.match.params.index;
         console.log("index in wireframerScreen "+index);
-        // if (!todoList)
-        //     return <React.Fragment />
-        // const dt = new Date();
-        // const x = dt.toUTCString();
-        // const fireStore = getFirestore();
-        // // fireStore.collection('todoLists').doc(todoList.id).update({
-        //     'lastOpened': { x }
+       
+        const userID=getFirebase().auth().currentUser.uid;
+        console.log("current user: "+userID);
+
+        const dt = new Date();
+        const x = dt.toUTCString();
+        if (this.props.users.users!=undefined){
+            // const fireStore = getFirestore();
+ 
+            console.log("!!!");
+            var db = firebase.firestore();
+            const user=db.collection("users").doc(userID);
+            user.get().then(doc=>{
+                const wireframers=doc.data().wireframers;
+                console.log(">>>")
+                console.log(wireframers)
+                let wireframer=wireframers[index]
+                
+                wireframer.lastOpened=dt;
+                console.log(wireframer)
+                wireframers[index]=wireframer
+                
+                // user.update({
+                //     "wireframers":[...wireframers]
+                // })
+            
+
+            })
+        }
+        // fireStore.collection('users').doc(userID).update({
+        //     "wireframers":
         // });
+
         return (
             <div>
                 <div className="row outContainer">
@@ -123,14 +152,14 @@ const mapStateToProps = (state, ownProps) => {
 
 
     return {
-        todoList,
         auth: state.firebase.auth,
+        users: state.firestore.data
     };
 };
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
-        { collection: 'todoLists' },
+        { collection: 'users' },
     ]),
 )(WireframerScreen);

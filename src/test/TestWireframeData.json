@@ -9,6 +9,7 @@
 			"wireframers":[
 				{
 					"name": "Default Wireframer",
+					"index":0,
 					"dimension": 100,
 					"controls":[
 						{
@@ -49,6 +50,7 @@
 				{
 					"name": "Second Default Wireframer",
 					"dimension": 100,
+					"index":1,
 					"controls":[
 						{
 							"control_type":"label",

@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { NavLink, Redirect } from 'react-router-dom';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, actionTypes } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
-import {getFirebase ,getFirestore} from 'react-redux-firebase';
+import {getFirebase} from 'react-redux-firebase';
 import {Row,Card, Col} from 'react-materialize';
 import WireframerCard from './WireframerCard';
+import { getFirestore } from 'redux-firestore';
 
 class HomeScreen extends Component {
 
     state={
-        wireframers:[]
+        user:null,
+        wireframers:[],
+        userID:"0",
     }
     render() {
         if (!this.props.auth.uid) {
@@ -19,6 +22,7 @@ class HomeScreen extends Component {
         }
         const users=this.props.users.users;
         const userID=getFirebase().auth().currentUser.uid;
+        this.state.userID=userID;
         
         console.log(">>>");
         if (this.props.users.users!=undefined){
@@ -26,18 +30,30 @@ class HomeScreen extends Component {
             console.log(users);
             console.log(userID)
             console.log(users[userID]["wireframers"]);
-            this.state.wireframers=users[userID]["wireframers"]
+            this.state.user=users[userID];
+            let list=users[userID]["wireframers"];
+            function compare(a,b){
+                if (a.lastOpened<b.lastOpened){
+                    return 1
+                }
+                else return -1
+            }
+            list=list.sort(compare);
+            this.state.wireframers=list;
+            console.log("after sort: >>>");
+            console.log(list);
         }
+
         console.log(this.state.wireframers);
-        let index=0;
+
         return (
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m4">
                         {this.state.wireframers.map(wireframer => (
-                        <Link to={'/wireframer/' + index} key={wireframer.name}>
+                        <Link to={'/wireframer/' + wireframer.index} key={wireframer.name}>
                             {/* <WireframerCard wireframer={wireframer} /> */}
-                            {index=index+1}
+                           
                             <Row>
                                 <Col m={12} s={12}>
                                     <Card
@@ -65,13 +81,37 @@ class HomeScreen extends Component {
                                     </button>
                                 <Link />
                         </div>
+                        {this.state.user!=null && this.state.user.whetherAdministrator? 
+                            <div>
+                                <Link to="databaseTester">
+                                    <button>
+                                        databaseTester
+                                    </button>
+                                </Link>
+                            </div>
+                        :<div></div>
+                        }
+                        
                     </div>
                 </div>
             </div>
         );
     }
     handleAddList=()=>{
-        this.props.addList(this.props.history);
+        // this.props.addList(this.props.history);
+        alert("!");
+        const fireStore=getFirestore();
+        fireStore.collection("users").doc(this.state.userID).update({
+            "wireframers":[...this.state.wireframers,{
+					"name": "Unknown",
+					"dimension": 100,
+					"index":this.state.wireframers.length,
+					"controls":[]
+            }]
+        }).then(x=>{
+            //console.log(x.id);
+            //this.props.history.push('/wireframer/'+this.state.wireframers.length)
+        })
     }
    
 }
