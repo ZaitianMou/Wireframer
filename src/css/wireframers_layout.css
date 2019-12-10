@@ -21,8 +21,8 @@ body {
 }
 
 div.banner {
-  padding: 20px;
-  margin-top: 60px;
+  /* padding: 20px; */
+  /* margin-top: 60px; */
 }
 
 form {
@@ -85,6 +85,17 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 #text_recent_work{
   font-size: xx-large;
   margin: auto;
+}
+.submit_button_in_modal{
+  position: absolute;
+  left:5%;
+  top:75%;
+}
+.home_wireframer_link{
+  display: inline-block;
+}
+.home_delete_button{
+  display: inline-block;
 }
 /* 
 .left{
