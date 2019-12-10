@@ -6,7 +6,6 @@ import { firestoreConnect, actionTypes } from 'react-redux-firebase';
 import { Link } from 'react-router-dom';
 import {getFirebase} from 'react-redux-firebase';
 import {Row,Card, Col} from 'react-materialize';
-import WireframerCard from './WireframerCard';
 import { getFirestore } from 'redux-firestore';
 
 class HomeScreen extends Component {
@@ -48,23 +47,22 @@ class HomeScreen extends Component {
 
         return (
             <div className="dashboard container">
+                <p className="large" id="text_recent_work">
+                    Recent work: 
+                </p>
                 <div className="row">
                     <div className="col s12 m4">
                         {this.state.wireframers.map(wireframer => (
-                        <Link to={'/wireframer/' + wireframer.index} key={wireframer.name}>
-                            {/* <WireframerCard wireframer={wireframer} /> */}
-                           
-                            <Row>
-                                <Col m={12} s={12}>
-                                    <Card
-                                        className="grey darken-2"
-                                        textClassName="white-text"
-                                    >
-                                    {wireframer.name}
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Link>
+                        <div>
+                            <Link to={'/wireframer/' + wireframer.index} key={wireframer.name}>
+                                <div className="black-text">
+                                {wireframer.name}
+                                </div>
+                            </Link>
+                            <button className="red-text" onClick={(e)=>this.handleDeleteWireframer(wireframer)}>
+                                X
+                            </button>
+                        </div>
                 ))}
                     </div>
 
@@ -81,6 +79,7 @@ class HomeScreen extends Component {
                                     </button>
                                 <Link />
                         </div>
+
                         {this.state.user!=null && this.state.user.whetherAdministrator? 
                             <div>
                                 <Link to="databaseTester">
@@ -96,6 +95,15 @@ class HomeScreen extends Component {
                 </div>
             </div>
         );
+    }
+    handleDeleteWireframer=(wireframer)=>{
+        const fireStore=getFirestore();
+        let x=this.state.wireframers;
+        let index=x.indexOf(wireframer);
+        x.splice(index,1);
+        fireStore.collection("users").doc(this.state.userID).update({
+            "wireframers":[...x]
+        })
     }
     handleAddList=()=>{
         // this.props.addList(this.props.history);

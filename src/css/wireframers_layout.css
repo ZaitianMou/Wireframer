@@ -81,3 +81,15 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .add_element_section{
   border-style: ridge;
 }
+
+#text_recent_work{
+  font-size: xx-large;
+  margin: auto;
+}
+/* 
+.left{
+  width:90%
+}
+.right{
+  width:10%;
+} */
