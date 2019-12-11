@@ -16,8 +16,6 @@ class LoggedInLinks extends React.Component {
 
   render() {
     const { profile } = this.props;
-    const email=getFirebase().auth.currentUser;
-    console.log(email+".at loggedLink");
     
     return (
       <ul className="right">

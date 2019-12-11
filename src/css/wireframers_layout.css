@@ -69,17 +69,22 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 .save_button{
   position: absolute;
-  top: 10%;
+  top: 20%;
   left: 7.5%;
+  cursor: pointer;
 }
 .close_button{
   position: absolute;
-  top: 10%;
+  top: 22%;
   left: 11.3%;
+  cursor: pointer;
 }
 
 .add_element_section{
   border-style: ridge;
+}
+.add_element_icon{
+  cursor: pointer;
 }
 
 #text_recent_work{
@@ -96,6 +101,11 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 .home_delete_button{
   display: inline-block;
+}
+#white_board{
+  background-color: white;
+  /* width: 500px;
+  height: 400px; */
 }
 /* 
 .left{

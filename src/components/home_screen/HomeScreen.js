@@ -46,7 +46,7 @@ class HomeScreen extends Component {
             // console.log(list);
         }
 
-        //console.log(this.state.wireframers);
+        console.log(this.state.wireframers);
 
         return (
             <div className="dashboard container">
@@ -63,17 +63,16 @@ class HomeScreen extends Component {
                                 {wireframer.name}
                                 </div>
                             </Link>
-                            {console.log(wireframer.name)}
 
-                            <Button  href="#modal1" className="modal-trigger red modal_delete_list waves-effect waves-light home_delete_button">
+                            <Button  href={"#modal"+wireframer.index}   className="modal-trigger red modal_delete_list waves-effect waves-light home_delete_button">
                                 <i className="material-icons">clear</i>
                             </Button>
-                            <Modal id="modal1" header={"Delete Wireframer: "+wireframer.name+"?"}>
+                            <Modal id={"modal"+wireframer.index}  header={"Delete Wireframer: "+wireframer.name+"?"}>
                                 Are you sure you would like to delete wireframer:
                                 <br></br>
                                 <b>Note: it's not undoable.</b>
                                 <Link to="/" >
-                                    <Button className="submit_button_in_modal red" onClick={(e)=>this.handleDeleteWireframer(wireframer)}>
+                                    <Button className="submit_button_in_modal red" onClick={()=>{this.handleDeleteWireframer(wireframer)}}>
                                         <i>Yes</i>
                                     </Button>
                                 </Link>
@@ -82,7 +81,7 @@ class HomeScreen extends Component {
                 ))}
                     </div>
 
-                    <div className="col s3">
+                    <div className="col s6">
                         <div className="banner">
                             Wireframers<br />
                         </div>
@@ -108,30 +107,6 @@ class HomeScreen extends Component {
                         }
                         
                     </div>
-                    <div className="col s3">
-                        {/* <moveableDemo /> */}
-                        <div>
-                            <button className="draggable">
-                                YOOOOO!
-                            </button>
-                                <Moveable
-                                    target={document.querySelector(".draggable")}
-                                    draggable={true}
-                                    throttleDrag={0}
-                                    onDrag={({ target, left, top, beforeDelta }) => {
-                                        target.style.left = left + "px";
-                                        target.style.top = top + "px";
-                            
-                                        /* const translate = this.translate */
-                                        /* translate[0] += beforeDelta[0]; */
-                                        /* translate[1] += beforeDelta[1]; */
-                                        /* target.style.transform
-                                            = "translateX(" + translate[0] + "px) "
-                                            + "translateY(" + translate[1] + "px)"; */
-                                    }}
-                                />
-                            </div>
-                    </div>
                 </div>
             </div>
         );
@@ -148,18 +123,19 @@ class HomeScreen extends Component {
     }
     handleAddList=()=>{
         // this.props.addList(this.props.history);
-        alert("!");
+        //alert("!");
         const fireStore=getFirestore();
         fireStore.collection("users").doc(this.state.userID).update({
             "wireframers":[...this.state.wireframers,{
-					"name": "Unknown",
+					"name": "Unknown whose index is "+(this.state.wireframers[this.state.wireframers.length-1].index+1),
 					"dimension": 100,
-					"index":this.state.wireframers.length,
+					"index":this.state.wireframers[this.state.wireframers.length-1].index+1,
 					"controls":[]
             }]
         }).then(x=>{
-            //console.log(x.id);
-            //this.props.history.push('/wireframer/'+this.state.wireframers.length)
+            //console.log(this.state.wireframers[this.state.wireframers.length-1].index);
+            let indexOfNewWireframer=this.state.wireframers[this.state.wireframers.length-1].index
+            this.props.history.push('/wireframer/'+indexOfNewWireframer)
         })
     }
    
