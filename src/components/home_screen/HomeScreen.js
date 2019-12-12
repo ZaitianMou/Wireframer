@@ -128,7 +128,8 @@ class HomeScreen extends Component {
         fireStore.collection("users").doc(this.state.userID).update({
             "wireframers":[...this.state.wireframers,{
 					"name": "Unknown whose index is "+(this.state.wireframers[this.state.wireframers.length-1].index+1),
-					"dimension": 100,
+					"board_height": 400,
+					"board_width":400,
 					"index":this.state.wireframers[this.state.wireframers.length-1].index+1,
 					"controls":[]
             }]

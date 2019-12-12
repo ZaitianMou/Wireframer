@@ -10,8 +10,8 @@
 				{
 					"name": "Default Wireframer",
 					"index":0,
-					"board_height": 100,
-					"board_width":100,
+					"board_height": 400,
+					"board_width":400,
 					"controls":[
 						{
 							"control_type":"button",
@@ -51,7 +51,8 @@
 
 				{
 					"name": "Second Default Wireframer",
-					"dimension": 100,
+					"board_height": 400,
+					"board_width":400,
 					"index":1,
 					"controls":[
 						{
