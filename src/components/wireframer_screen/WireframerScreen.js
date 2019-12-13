@@ -9,8 +9,6 @@ import Moveable from "react-moveable";
 import firebase from "../../config/firebaseConfig";
 import ResizableRect from 'react-resizable-rotatable-draggable';
 import { Button, Modal } from 'react-materialize';
-import { thisExpression } from '@babel/types';
-
 class WireframerScreen extends Component {
     state = {
         wireframer:null,
@@ -19,27 +17,6 @@ class WireframerScreen extends Component {
         index: null,
         userID:'',
         inArrayPosition:-1,
-    }
-
-
-    
-
-    left=()=>{
-        if(this.state.wireframer==undefined || this.state.wireframer.controls.length==0){
-            return 0
-        }
-        else{
-            return this.state.wireframer.controls[0].left
-        }
-    }
-    
-    top=()=>{
-        if(this.state.wireframer==undefined ||this.state.wireframer.controls.length==0){
-            return 0
-        }
-        else{
-            return this.state.wireframer.controls[0].top
-        }
     }
 
     render() {
@@ -52,84 +29,39 @@ class WireframerScreen extends Component {
 
         this.state.index=this.props.match.params.index;
         this.state.userID=getFirebase().auth().currentUser.uid;
-        
         const dt = new Date();
         const x = dt.toUTCString();
-
         if(this.state.wireframers==null){
 
-        
-        if (this.props.users.users!=undefined){
-            // const fireStore = getFirestore();
-
- 
-            console.log("!!!");
-            const user=firebase.firestore().collection("users").doc(this.state.userID);
-            user.get().then(doc=>{
-                const wireframers=doc.data().wireframers;
-                console.log(">>>")
-                console.log(wireframers)
-               
-
-                
-                for (let i=0;i<wireframers.length;i++){
+            if (this.props.users.users!=undefined){
+                console.log("!!!");
+                const user=firebase.firestore().collection("users").doc(this.state.userID);
+                user.get().then(doc=>{
+                    const wireframers=doc.data().wireframers;
+                    console.log(">>>")
+                    console.log(wireframers)
+                    const i=this.props.match.params.index;
                     if (wireframers[i].index==this.state.index){
-
-                        
                         this.state.wireframer=wireframers[i]
                         this.state.wireframer.lastOpened=dt;
                         this.state.wireframers=wireframers;
                         this.state.inArrayPosition=i;
-                        // this.setState({
-                        //     wireframer:wireframers[i],
-                        // })
                         
+                        this.state.wireframers[i].lastOpened=x;
+                        user.update({
+                            wireframers:this.state.wireframers
+                        })
+
                         //if (this.state.wireframer!=undefined){
                         console.log("???????hahahah"+this.state.wireframer.board_width+this.state.wireframer.board_height);
                         document.getElementById("white_board").style.backgroundColor="red";
                         document.getElementById("white_board").style.width=this.state.wireframer.board_width;
-                        //console.log(wireframers[i].board_width)
                         document.getElementById("white_board").style.height=this.state.wireframer.board_height;
-                        //console.log(">>"+document.getElementById("white_board").style.width);
-                        //}
-                        break;
+                
                     }
-                }
-                }
-
-            )
+                })
+            }
         }
-
-            //const fireStore=getFirestore();
-            //if (this.state.wireframers!=null){
-            // firebase.firestore().collection("users").doc(this.state.userID).update({
-            //     "wireframers":[...this.state.wireframers]
-            // })
-            //}
-        }
-        //userRef=firebase.firestore().collection("users").doc(this.state.userID)
-        const user1=firebase.firestore().collection("users").doc(this.state.userID);
-
-        let wf111 = user1.get().wireframers;
-        user1.get().then(doc=>{
-            wf111 = doc.data().wireframers;
-        })
-        console.log(wf111)
-        console.log("mmmmmm")
-        console.log(this.props.profile.wireframers)
-
-
-        // console.log(auth.uid)
-        // console.log(this.props.users.users)
-        // let uid=auth.uid
-        // let users=this.props.users.users;
-        //if (this.props.users.users!=undefined){
-            console.log("FFFFFFFFF!!!!!!")
-            //let user=users[uid];
-            //console.log(users)
-            //let wf=null;
-        //}
-
         return (
             <div>
                 <p classNmae="large">
@@ -185,8 +117,8 @@ class WireframerScreen extends Component {
                              left:this.state.wireframer.controls[0].left, position: 'absolute'}}> YOOOO </button>
 
                             <ResizableRect
-                                left={this.left()}
-                                top={this.top()}
+                                left={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].left}
+                                top={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].top}
                                 width={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].width}
                                 height={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].height}
                                 // rotateAngle={rotateAngle}
@@ -216,32 +148,12 @@ class WireframerScreen extends Component {
         );
     }
     handleDrag = (deltaX, deltaY) => {
-        //  this.setState({
-        //     left: this.state.left + deltaX,
-        //     top: this.state.top + deltaY
-        //     })
         let temp=this.state.wireframer;
-        console.log("...."+deltaX+"."+deltaY)
-        console.log(",,,"+temp.controls[0].top+"."+temp.controls[0].left)
-        
         temp.controls[0].left=temp.controls[0].left+deltaX;
         temp.controls[0].top=temp.controls[0].top+deltaY;
-        console.log("!!!in drag")
-        console.log(temp.controls[0])
-        // this.setState(
-        //     {controls:temp},
-        //     ()=>{console.log()}
-        // );
          this.setState(
            { wireframer:temp,}
         );
-
-       // this.state.wireframer.controls=temp;
-        // let x=this.state.wireframer;
-        // x.controls=temp;
-        // this.setState({
-        //     wireframer:x,
-        // })
       }
      
     handleResize = (style, isShiftKey, type) => {
@@ -252,7 +164,6 @@ class WireframerScreen extends Component {
         left = Math.round(left)
         width = Math.round(width)
         height = Math.round(height)
-        
 
         let temp=this.state.wireframer;
         console.log(temp.controls)
@@ -261,15 +172,6 @@ class WireframerScreen extends Component {
         temp.controls[0].height=height;
         temp.controls[0].left=left;
         temp.controls[0].width=width;
-
-        // const increment =({wireframer},temp)=>({
-        //     wireframer:temp,
-        // });
-        // this.setState(
-        //     {wireframer: temp},
-        //     ()=>{console.log("~~~~~");
-        //         console.log(this.state.wireframer.controls[0])}
-        // );
         this.setState({
             wireframer:temp,
         })
@@ -281,20 +183,14 @@ class WireframerScreen extends Component {
     handleSelected=()=>{
     }
     saveWork=(controls)=>{
-        //const fireStore=getFirestore();
-        console.log("////in save work")
-        console.log(controls[0].height)
-        console.log(this.state.wireframer.controls[0].height)
-        
         let userRef=firebase.firestore().collection("users").doc(this.state.userID)
         let x=this.state.wireframers;
         x[this.state.inArrayPosition]=this.state.wireframer;    
-        // console.log(x)
         userRef.update({
             "wireframers":x
         })
         
-        alert("You have to implement to save this work");
+        alert("Saved");
     }
 
     createAButton=()=>{

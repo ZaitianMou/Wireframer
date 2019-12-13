@@ -26,12 +26,7 @@ class HomeScreen extends Component {
         const userID=getFirebase().auth().currentUser.uid;
         this.state.userID=userID;
         
-        //console.log(">>>");
         if (this.props.users.users!=undefined){
-            // console.log(">")
-            // console.log(users);
-            // console.log(userID)
-            // console.log(users[userID]["wireframers"]);
             this.state.user=users[userID];
             let list=users[userID]["wireframers"];
             function compare(a,b){
@@ -117,6 +112,9 @@ class HomeScreen extends Component {
         let x=this.state.wireframers;
         let index=x.indexOf(wireframer);
         x.splice(index,1);
+        for (let i=index;i<x.length;i++){
+            x[i].index=i
+        }
         fireStore.collection("users").doc(this.state.userID).update({
             "wireframers":[...x]
         })
@@ -127,10 +125,11 @@ class HomeScreen extends Component {
         const fireStore=getFirestore();
         fireStore.collection("users").doc(this.state.userID).update({
             "wireframers":[...this.state.wireframers,{
-					"name": "Unknown whose index is "+(this.state.wireframers[this.state.wireframers.length-1].index+1),
+					"name": "Unknown",
 					"board_height": 400,
-					"board_width":400,
-					"index":this.state.wireframers[this.state.wireframers.length-1].index+1,
+                    "board_width":400,
+                    "index":this.state.wireframers.length,
+					//"index":this.state.wireframers[this.state.wireframers.length-1].index+1,
 					"controls":[]
             }]
         }).then(x=>{
