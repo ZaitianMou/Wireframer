@@ -107,6 +107,16 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   /* width: 500px;
   height: 400px; */
 }
+
+#name_input_field{
+  width:20%
+}
+
+.dimension_input_field{
+  width: 10%;
+  height: 20%;
+  font-size: 12px;
+}
 /* 
 .left{
   width:90%

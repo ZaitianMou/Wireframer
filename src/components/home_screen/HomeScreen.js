@@ -37,8 +37,6 @@ class HomeScreen extends Component {
             }
             list=list.sort(compare);
             this.state.wireframers=list;
-            // console.log("after sort: >>>");
-            // console.log(list);
         }
 
         console.log(this.state.wireframers);

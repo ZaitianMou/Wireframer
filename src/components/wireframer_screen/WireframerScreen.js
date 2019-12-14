@@ -9,6 +9,9 @@ import Moveable from "react-moveable";
 import firebase from "../../config/firebaseConfig";
 import ResizableRect from 'react-resizable-rotatable-draggable';
 import { Button, Modal } from 'react-materialize';
+import Control from './Control';
+import {Rnd} from 'react-rnd';
+
 class WireframerScreen extends Component {
     state = {
         wireframer:null,
@@ -64,14 +67,28 @@ class WireframerScreen extends Component {
         }
         return (
             <div>
-                <p classNmae="large">
-                    {this.state.wireframer?this.state.wireframer.name:null}
-                </p>
+                <div className="input-field">
+                    <label htmlFor="email" className="active">Name</label>
+                    <input className="active" value={this.state.wireframer?this.state.wireframer.name:null} type="text" name="name" 
+                    id="name_input_field" onChange={(event) => this.editName(event.target.value)} />
+                </div>
+                
                 <div className="row outContainer">
                     <div className="col s2">
                         <div className="zoomAndSaveSection">
                             <i className="material-icons">zoom_in</i>
                             <i className="material-icons">zoom_out</i>
+                            <div className="input-field">
+                                <label htmlFor="email" className="active">board width:</label>
+                                <input className="active dimension_input_field" value={this.state.wireframer?this.state.wireframer.board_width:null} type="text" name="name" 
+                                onChange={(event) => this.changeDimension(event.target.value,"width")} />
+                            </div>
+                            <div className="input-field">
+                                <label htmlFor="email" className="active">board height:</label>
+                                <input className="active dimension_input_field" value={this.state.wireframer?this.state.wireframer.board_height:null} type="text" name="name" 
+                                onChange={(event) => this.changeDimension(event.target.value,"height")} />
+                            </div>
+
                             <p className="save_button" onClick={() => this.saveWork(this.state.wireframer.controls)} >Save</p>
                             <p className="close_button" className={"modal-trigger"} href={"#modalWhenClose"} >Close</p>
                             <Modal id="modalWhenClose"  header={"Want to save your work before leave?"}>
@@ -111,29 +128,34 @@ class WireframerScreen extends Component {
                     <div className="col s7">
                         <div id="white_board">
                             
-                             <button style={this.state.wireframer==undefined || this.state.wireframer.controls==undefined
-                             || this.state.wireframer.controls.length==0? {}:{width:this.state.wireframer.controls[0].width, 
-                             height:this.state.wireframer.controls[0].height, top:this.state.wireframer.controls[0].top, 
-                             left:this.state.wireframer.controls[0].left, position: 'absolute'}}> YOOOO </button>
-
-                            <ResizableRect
-                                left={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].left}
-                                top={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].top}
-                                width={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].width}
-                                height={this.state.wireframer==undefined ||this.state.wireframer.controls.length==0?0:this.state.wireframer.controls[0].height}
-                                // rotateAngle={rotateAngle}
-                                // aspectRatio={false}
-                                // minWidth={10}
-                                // minHeight={10}
-                                zoomable='n, w, s, e, nw, ne, se, sw'
-                                // onResizeStart={this.handleResizeStart}
-                                onResize={this.handleResize}
-                                // onResizeEnd={this.handleUp}
-                                // onDragStart={this.handleDragStart}
-                                onDrag={this.handleDrag}
-                                // onDragEnd={this.handleDragEnd}
-                            />
-                                                
+                            {this.state.wireframer && this.state.wireframer.controls.map((element,index)=>(
+                               
+                                <div>
+                                <Rnd
+                                    size={{ width:100 , height:100 }}
+                                    position={{ x: element.left, y: element.top }}
+                                    onDragStop={(e, d) => { 
+                                        let temp=this.state.wireframer;
+                                        temp.controls[index].top=d.y;
+                                        temp.controls[index].left=d.x;
+                                        this.setState({
+                                         wireframer: temp}) 
+                                        }}
+                                    onResizeStop={(e, direction, ref, delta, position) => {
+                                        let temp=this.state.wireframer;
+                                        temp.controls[index].width=ref.style.width;
+                                        temp.controls[index].height=ref.style.height;
+                                        this.setState({
+                                         wireframer: temp}) 
+                                         
+                                        }}
+                                    >
+                                    <Control element={element}/>
+                                  
+                                </Rnd>
+                                
+                            </div>
+                            ))}            
                         </div>
                          
                     </div>
@@ -147,16 +169,16 @@ class WireframerScreen extends Component {
             </div>
         );
     }
-    handleDrag = (deltaX, deltaY) => {
-        let temp=this.state.wireframer;
-        temp.controls[0].left=temp.controls[0].left+deltaX;
-        temp.controls[0].top=temp.controls[0].top+deltaY;
-         this.setState(
-           { wireframer:temp,}
-        );
-      }
+    // handleDrag = (deltaX, deltaY) => {
+    //     let temp=this.state.wireframer;
+    //     temp.controls[0].left=temp.controls[0].left+deltaX;
+    //     temp.controls[0].top=temp.controls[0].top+deltaY;
+    //      this.setState(
+    //        { wireframer:temp,}
+    //     );
+    //   }
      
-    handleResize = (style, isShiftKey, type) => {
+    handleResize = (style, isShiftKey, type,element) => {
         // type is a string and it shows which resize-handler you clicked
         // e.g. if you clicked top-right handler, then type is 'tr'
         let { top, left, width, height } = style
@@ -166,17 +188,39 @@ class WireframerScreen extends Component {
         height = Math.round(height)
 
         let temp=this.state.wireframer;
-        console.log(temp.controls)
-        console.log("????")
-        temp.controls[0].top=top;
-        temp.controls[0].height=height;
-        temp.controls[0].left=left;
-        temp.controls[0].width=width;
+        
+        temp.controls[element.index].top=top;
+        temp.controls[element.index].height=height;
+        temp.controls[element.index].left=left;
+        temp.controls[element.index].width=width;
         this.setState({
             wireframer:temp,
         })
-
-      }
+    }
+    editName=(value)=>{
+        let t=this.state.wireframers;
+        t[this.state.index].name=value;
+        this.setState({
+            wireframers:t
+        })
+    }
+    changeDimension=(value,type)=>{
+        let t=this.state.wireframers;
+        if (value==""){value=0;}
+        if (type=="width"){
+            t[this.state.index].board_width=parseInt(value);
+        }
+        else if (type=="height"){
+            t[this.state.index].board_height=parseInt(value);
+        }
+        else {
+            alert("WTF!!! It's not supposed to happen!!!")
+        }
+        this.setState({
+            wireframers:t
+        })
+    }
+    
 
     getLeft=()=>{
     }
@@ -195,6 +239,23 @@ class WireframerScreen extends Component {
 
     createAButton=()=>{
         alert("New button")
+        let temp=this.state.wireframer;
+        temp.controls.push({
+            "control_type":"button",
+            "index":temp.controls.length,
+            "top": 0,
+            "left": 0,
+            "width": 50,
+            "height": 20,
+            "text": "This is a button.",
+            "text_font_size":12,
+            "color":"white",
+            "border": 2
+        })
+        this.setState({
+            wireframer:temp
+        })
+
     }
     createALebel=()=>{
         alert("New Lebel")
