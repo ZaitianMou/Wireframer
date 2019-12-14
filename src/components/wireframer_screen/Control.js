@@ -15,7 +15,7 @@ class Control extends Component {
         const element = this.props.element;
         if (element.control_type == "button") {
             return (
-                <button style={{ width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}> {element.text}</button>
+                <button style={{ display: "inline-block",width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}> {element.text}</button>
 
             )
         }

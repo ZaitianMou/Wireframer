@@ -62,12 +62,20 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 /* I wrote below */
 #white_board{
   border-style: ridge;
+  
 }
+
 #property_section{
   border-style: ridge;
 }
 .outContainer{
-  border-style: ridge;
+  
+  display: flex;
+}
+.col{
+  flex: 1;
+  padding: 16px;
+  height: 550px;
 }
 
 .zoomAndSaveSection{
@@ -109,9 +117,12 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   display: inline-block;
 }
 #white_board{
+  /* width:70%; */
   background-color: white;
-  /* width: 500px;
-  height: 400px; */
+  /* overflow-y: scroll;
+  overflow-x: scroll;
+  white-space: nowrap; */
+  padding: 0
 }
 
 #name_input_field{
@@ -122,6 +133,13 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   width: 10%;
   height: 20%;
   font-size: 12px;
+}
+
+
+.selected_control{
+  outline-width: 1px;
+  outline-style: dashed;
+  outline-color: red;
 }
 /* 
 .left{

@@ -51,8 +51,6 @@ class WireframerScreen extends Component {
                         this.state.inArrayPosition = i;
 
                         this.state.wireframers[i].lastOpened = x;
-
-
                         user.update({
                             wireframers: this.state.wireframers
                         })
@@ -78,15 +76,15 @@ class WireframerScreen extends Component {
                             <i className="material-icons">zoom_out</i>
                             <div className="input-field">
                                 <label htmlFor="email" className="active">board width:</label>
-                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_width : null} type="text" name="name"
+                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_width : null} type="number" name="name"  min="1" max="5000"
                                     id="dimension_width_input" onChange={() => document.getElementById("button_update_dimension").disabled = false} />
                             </div>
                             <div className="input-field">
                                 <label htmlFor="email" className="active">board height:</label>
-                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_height : null} type="text" name="name"
+                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_height : null} type="number" name="name" min="1" max="5000"
                                     id="dimension_height_input" onChange={() => document.getElementById("button_update_dimension").disabled = false} />
                             </div>
-                            <button id="button_update_dimension" onClick={() => this.updateDimension()}>Update dimension</button>
+                            <button id="button_update_dimension" onClick={() => this.updateDimension()}>Update</button>
 
                             <p className="save_button" onClick={() => this.saveWork(this.state.wireframer.controls)} >Save</p>
                             <p className="close_button" className={"modal-trigger"} href={"#modalWhenClose"} >Close</p>
@@ -125,16 +123,18 @@ class WireframerScreen extends Component {
 
                     </div>
 
-                    <div className="col s7">
-                        <div id="white_board" onClick={() => this.unselectElement()} style={this.state.wireframer ? { height: this.state.wireframer.board_height, width: this.state.wireframer.board_width } : {}}>
+                    <div >
+                        <div  className="col s7" id="white_board" onClick={() => this.unselectElement()} style={this.state.wireframer ? { height: this.state.wireframer.board_height, width: this.state.wireframer.board_width } : {}}>
 
                             {this.state.wireframer && this.state.wireframer.controls.map((element, index) => (
 
-                                <div onClick={(e) => this.selectElement(index, e)}>
-                                    <Rnd
-                                        size={{ width: element.width, height: element.height }}
-                                        position={{ x: element.left<0?0:(element.left>this.state.wireframer.board_width-element.width?this.state.wireframer.board_width-element.width:element.left),
-                                             y: this.getTop(element.top,element.height)}}
+                                <div  onClick={(e) => this.selectElement(index, e)} >
+                                    <Rnd id={"control" + index}
+                                        size={{ width: parseInt(element.width), height: parseInt(element.height) }}
+                                        position={{
+                                            x: element.left < 0 ? 0 : (element.left > this.state.wireframer.board_width - parseInt(element.width,10) ? this.state.wireframer.board_width - parseInt(element.width,10) : element.left),
+                                            y: this.getTop(element.top, parseInt(element.height))
+                                        }}
                                         onDragStop={(e, d) => {
                                             let temp = this.state.wireframer;
                                             temp.controls[index].top = d.y;
@@ -177,7 +177,7 @@ class WireframerScreen extends Component {
                             <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].text_font_size : null}
                                 type="text" name="name" id="font_size_input" onChange={(event) => this.changeProperty("text_font_size", event.target.value)} />
                         </div>
-                   
+
                         <div>
                             <div style={{
                                 padding: '5px',
@@ -211,7 +211,7 @@ class WireframerScreen extends Component {
                             </div> : null}
 
                         </div>
-                       
+
 
                         <div className="input-field">
                             <label htmlFor="email" className="active">Board thickness</label>
@@ -232,31 +232,31 @@ class WireframerScreen extends Component {
             </div>
         );
     }
-    getTop(top,height){
-        height= parseInt(height,10);
-        if (top<0)
+    getTop(top, height) {
+        height = parseInt(height, 10);
+        if (top < 0)
             return 0;
-        else if (top>this.state.wireframer.board_height-height) 
-            return this.state.wireframer.board_height-height;
+        else if (top > this.state.wireframer.board_height - height)
+            return this.state.wireframer.board_height - height;
         else return top;
     }
-    getLeft(left,width){
-        width= parseInt(width,10);
-        if (left<0)
+    getLeft(left, width) {
+        width = parseInt(width, 10);
+        if (left < 0)
             return 0;
-        else if (left>this.state.wireframer.board_width-width) 
-            return this.state.wireframer.board_width-width;
+        else if (left > this.state.wireframer.board_width - width)
+            return this.state.wireframer.board_width - width;
         else return left;
     }
 
-    changeProperty=(type,value)=>{
+    changeProperty = (type, value) => {
         console.log(value)
         let temp = this.state.wireframer;
-        switch(type){
-            case "text":temp.controls[this.state.elementSelected].text=value;break;
-            case "text_font_size":temp.controls[this.state.elementSelected].text_font_size=parseInt(value);break;
-            case "border_thickness":temp.controls[this.state.elementSelected].border_thickness=parseInt(value);break;
-            case "border_radius":temp.controls[this.state.elementSelected].border_radius=parseInt(value);break;
+        switch (type) {
+            case "text": temp.controls[this.state.elementSelected].text = value; break;
+            case "text_font_size": temp.controls[this.state.elementSelected].text_font_size = parseInt(value); break;
+            case "border_thickness": temp.controls[this.state.elementSelected].border_thickness = parseInt(value); break;
+            case "border_radius": temp.controls[this.state.elementSelected].border_radius = parseInt(value); break;
         }
         this.setState({
             wireframer: temp
@@ -288,22 +288,26 @@ class WireframerScreen extends Component {
     };
 
     updateDimension = (value, type) => {
-
-        let width = document.getElementById("dimension_width_input").value;
-        let height = document.getElementById("dimension_height_input").value;
-        console.log("height: " + height);
+        let width = parseInt(document.getElementById("dimension_width_input").value);
+        let height = parseInt(document.getElementById("dimension_height_input").value);
         let t = this.state.wireframers;
-        if (width == "") { value = 0; }
-        if (height == "") { value = 0; }
-        console.log("height: " + height);
-
-        t[this.state.index].board_width = parseInt(width);
-        t[this.state.index].board_height = parseInt(height);
+        
+        if (!(width>=1 && width<=5000)){
+            alert("Input Invalid.")
+            return null
+        }
+        if (!(height>=1 && height<=5000)){
+            alert("Input Invalid.")
+            return null
+        }
+        t[this.state.index].board_width =width
+        t[this.state.index].board_height =height
         this.setState({
             wireframers: t
         })
 
         document.getElementById("button_update_dimension").disabled = true
+    
     }
 
     componentDidMount() {
@@ -343,15 +347,19 @@ class WireframerScreen extends Component {
         }
     }
     selectElement = (index, event) => {
-        document.getElementById("white_board")
         event.stopPropagation();
+        if (this.state.elementSelected!=null){
+            document.getElementById("control" + this.state.elementSelected).classList.remove("selected_control");
+        }
         this.setState({
             elementSelected: index
         })
-        console.log(index)
-        //alert("selected:"+this.state.elementSelected)
+        document.getElementById("control" + index).className = "selected_control";
     }
     unselectElement = () => {
+        if (this.state.elementSelected!=null){
+            document.getElementById("control" + this.state.elementSelected).classList.remove( "selected_control");
+        }
         this.setState({
             elementSelected: null
         })
