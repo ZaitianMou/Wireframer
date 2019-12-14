@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { getFirebase, getFirestore } from 'react-redux-firebase';
-import DragResizeContainer from 'react-drag-resize';
-import Moveable from "react-moveable";
 import firebase from "../../config/firebaseConfig";
-import ResizableRect from 'react-resizable-rotatable-draggable';
 import { Button, Modal } from 'react-materialize';
 import Control from './Control';
 import { Rnd } from 'react-rnd';
@@ -136,7 +133,8 @@ class WireframerScreen extends Component {
                                 <div onClick={(e) => this.selectElement(index, e)}>
                                     <Rnd
                                         size={{ width: element.width, height: element.height }}
-                                        position={{ x: element.left, y: element.top }}
+                                        position={{ x: element.left<0?0:(element.left>this.state.wireframer.board_width-element.width?this.state.wireframer.board_width-element.width:element.left),
+                                             y: this.getTop(element.top,element.height)}}
                                         onDragStop={(e, d) => {
                                             let temp = this.state.wireframer;
                                             temp.controls[index].top = d.y;
@@ -234,6 +232,23 @@ class WireframerScreen extends Component {
             </div>
         );
     }
+    getTop(top,height){
+        height= parseInt(height,10);
+        if (top<0)
+            return 0;
+        else if (top>this.state.wireframer.board_height-height) 
+            return this.state.wireframer.board_height-height;
+        else return top;
+    }
+    getLeft(left,width){
+        width= parseInt(width,10);
+        if (left<0)
+            return 0;
+        else if (left>this.state.wireframer.board_width-width) 
+            return this.state.wireframer.board_width-width;
+        else return left;
+    }
+
     changeProperty=(type,value)=>{
         console.log(value)
         let temp = this.state.wireframer;

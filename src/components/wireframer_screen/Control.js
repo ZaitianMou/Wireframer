@@ -21,7 +21,9 @@ class Control extends Component {
         }
         else if (element.control_type == "label") {
             return (
-                <b style={{ width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}> {element.text}</b>
+                <div style={{ width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`,borderStyle: "ridge" }}> 
+                {element.text}
+                </div>
             )
         }
         else if (element.control_type == "container") {
@@ -33,7 +35,7 @@ class Control extends Component {
         }
         else if (element.control_type == "textfield") {
             return (
-                <input value={element.text} style={{ fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}>
+                <input value={element.text} style={{ fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`,borderStyle: "ridge" }}>
                 </input>
             )
         }
