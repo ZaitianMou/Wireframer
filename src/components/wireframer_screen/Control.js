@@ -15,21 +15,26 @@ class Control extends Component {
         const element = this.props.element;
         if (element.control_type == "button") {
             return (
-                <button style={{ width: "100%", height: "100%" }}> {element.text}</button>
+                <button style={{ width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}> {element.text}</button>
 
             )
         }
         else if (element.control_type == "label") {
             return (
-                <p style={{ width: "100%", height: "100%" }}> {element.text}</p>
-
+                <b style={{ width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}> {element.text}</b>
             )
         }
         else if (element.control_type == "container") {
             return (
                 <Rectangle aspectRatio={[5, 3]}>
-                    <div style={{ background: '#607d8b', width: '100%', height: '100%' }} />
+                    <div style={{ background: '#607d8b', width: '100%', height: '100%', borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }} />
                 </Rectangle>
+            )
+        }
+        else if (element.control_type == "textfield") {
+            return (
+                <input value={element.text} style={{ fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}>
+                </input>
             )
         }
         else {

@@ -11,6 +11,8 @@ import ResizableRect from 'react-resizable-rotatable-draggable';
 import { Button, Modal } from 'react-materialize';
 import Control from './Control';
 import { Rnd } from 'react-rnd';
+import reactCSS from 'reactcss'
+import { SketchPicker } from 'react-color'
 
 class WireframerScreen extends Component {
     state = {
@@ -19,7 +21,8 @@ class WireframerScreen extends Component {
 
         index: null,
         userID: '',
-        inArrayPosition: -1,
+        inArrayPosition: -1, //position of currne wireframer in wireframers
+        displayColorPicker: false,
     }
 
     render() {
@@ -51,22 +54,20 @@ class WireframerScreen extends Component {
                         this.state.inArrayPosition = i;
 
                         this.state.wireframers[i].lastOpened = x;
+
+
                         user.update({
                             wireframers: this.state.wireframers
                         })
 
-                        //if (this.state.wireframer!=undefined){
-                        console.log("???????hahahah" + this.state.wireframer.board_width + this.state.wireframer.board_height);
-                        document.getElementById("white_board").style.backgroundColor = "red";
-                        document.getElementById("white_board").style.width = this.state.wireframer.board_width;
-                        document.getElementById("white_board").style.height = this.state.wireframer.board_height;
 
                     }
                 })
             }
         }
+
         return (
-            <div onKeyDown={e => this.keyboardInput(e)} onClick={() => this.unselectElement()}>
+            <div>
                 <div className="input-field">
                     <label htmlFor="email" className="active">Name</label>
                     <input className="active" value={this.state.wireframer ? this.state.wireframer.name : null} type="text" name="name"
@@ -80,14 +81,15 @@ class WireframerScreen extends Component {
                             <i className="material-icons">zoom_out</i>
                             <div className="input-field">
                                 <label htmlFor="email" className="active">board width:</label>
-                                <input className="active dimension_input_field" value={this.state.wireframer ? this.state.wireframer.board_width : null} type="text" name="name"
-                                    onChange={(event) => this.changeDimension(event.target.value, "width")} />
+                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_width : null} type="text" name="name"
+                                    id="dimension_width_input" onChange={() => document.getElementById("button_update_dimension").disabled = false} />
                             </div>
                             <div className="input-field">
                                 <label htmlFor="email" className="active">board height:</label>
-                                <input className="active dimension_input_field" value={this.state.wireframer ? this.state.wireframer.board_height : null} type="text" name="name"
-                                    onChange={(event) => this.changeDimension(event.target.value, "height")} />
+                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_height : null} type="text" name="name"
+                                    id="dimension_height_input" onChange={() => document.getElementById("button_update_dimension").disabled = false} />
                             </div>
+                            <button id="button_update_dimension" onClick={() => this.updateDimension()}>Update dimension</button>
 
                             <p className="save_button" onClick={() => this.saveWork(this.state.wireframer.controls)} >Save</p>
                             <p className="close_button" className={"modal-trigger"} href={"#modalWhenClose"} >Close</p>
@@ -125,8 +127,9 @@ class WireframerScreen extends Component {
                         </div>
 
                     </div>
+
                     <div className="col s7">
-                        <div id="white_board">
+                        <div id="white_board" onClick={() => this.unselectElement()} style={this.state.wireframer ? { height: this.state.wireframer.board_height, width: this.state.wireframer.board_width } : {}}>
 
                             {this.state.wireframer && this.state.wireframer.controls.map((element, index) => (
 
@@ -162,13 +165,130 @@ class WireframerScreen extends Component {
                     </div>
 
 
-                    <div className="col s3">
+                    <div className="col s3" id="property_section">
+                        <p>Properties</p>
+
+                        <div className="input-field">
+                            <label htmlFor="email" className="active">Text</label>
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].text : null}
+                                type="text" name="name" id="text_input" onChange={(event) => this.changeProperty("text", event.target.value)} />
+                        </div>
+
+                        <div className="input-field">
+                            <label htmlFor="email" className="active">Font size</label>
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].text_font_size : null}
+                                type="text" name="name" id="font_size_input" onChange={(event) => this.changeProperty("text_font_size", event.target.value)} />
+                        </div>
+                   
+                        <div>
+                            <div style={{
+                                padding: '5px',
+                                background: '#fff',
+                                borderRadius: '1px',
+                                boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                                display: 'inline-block',
+                                cursor: 'pointer',
+                            }} onClick={this.handleClick}>
+                                <div style={{
+                                    width: '36px',
+                                    height: '14px',
+                                    borderRadius: '2px',
+                                    background: `rgba(${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.r : null}, ${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.g : null}, 
+                                    ${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.b : null}, ${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.a : null} :{})`,
+                                }} />
+                            </div>
+                            {this.state.displayColorPicker ? <div style={{
+                                position: 'absolute',
+                                zIndex: '2',
+                            }}>
+                                <div style={{
+                                    position: 'fixed',
+                                    top: '0px',
+                                    right: '0px',
+                                    bottom: '0px',
+                                    left: '0px',
+                                }} onClick={this.handleClose} />
+
+                                <SketchPicker color={this.getColor()} onChange={this.handleChange} />
+                            </div> : null}
+
+                        </div>
+                       
+
+                        <div className="input-field">
+                            <label htmlFor="email" className="active">Board thickness</label>
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].border_thickness : null}
+                                type="text" name="name" id="board_thickness_input" onChange={(event) => this.changeProperty("border_thickness", event.target.value)} />
+                        </div>
+
+                        <div className="input-field">
+                            <label htmlFor="email" className="active">Board radius</label>
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].border_radius : null}
+                                type="text" name="name" id="board_radius_input" onChange={(event) => this.changeProperty("border_radius", event.target.value)} />
+                        </div>
+
 
 
                     </div>
                 </div>
             </div>
         );
+    }
+    changeProperty=(type,value)=>{
+        console.log(value)
+        let temp = this.state.wireframer;
+        switch(type){
+            case "text":temp.controls[this.state.elementSelected].text=value;break;
+            case "text_font_size":temp.controls[this.state.elementSelected].text_font_size=parseInt(value);break;
+            case "border_thickness":temp.controls[this.state.elementSelected].border_thickness=parseInt(value);break;
+            case "border_radius":temp.controls[this.state.elementSelected].border_radius=parseInt(value);break;
+        }
+        this.setState({
+            wireframer: temp
+        })
+
+    }
+    getColor = () => {
+        alert("ready")
+        if (this.state.wireframer && this.state.elementSelected) {
+            return this.state.wireframer.controls[this.state.elementSelected].color;
+        }
+        else {
+            alert("NOT ok")
+            return null
+        }
+    }
+    handleClick = () => {
+        this.setState({ displayColorPicker: !this.state.displayColorPicker })
+    };
+
+    handleClose = () => {
+        this.setState({ displayColorPicker: false })
+    };
+
+    handleChange = (color) => {
+        let temp = this.state.wireframer;
+        temp.controls[this.state.elementSelected].color = color
+        this.setState({ wireframers: temp })
+    };
+
+    updateDimension = (value, type) => {
+
+        let width = document.getElementById("dimension_width_input").value;
+        let height = document.getElementById("dimension_height_input").value;
+        console.log("height: " + height);
+        let t = this.state.wireframers;
+        if (width == "") { value = 0; }
+        if (height == "") { value = 0; }
+        console.log("height: " + height);
+
+        t[this.state.index].board_width = parseInt(width);
+        t[this.state.index].board_height = parseInt(height);
+        this.setState({
+            wireframers: t
+        })
+
+        document.getElementById("button_update_dimension").disabled = true
     }
 
     componentDidMount() {
@@ -177,13 +297,13 @@ class WireframerScreen extends Component {
     onKeyPressed(e) {
         if (this.state.elementSelected != null) {
             if (e.key === 'd' && e.ctrlKey) {
-                console.log("Ctrl+D detected. Duplicate element: "+this.state.elementSelected);
+                console.log("Ctrl+D detected. Duplicate element: " + this.state.elementSelected);
                 let temp = this.state.wireframer;
-                let e=temp.controls[this.state.elementSelected]
-                let e2=JSON.parse(JSON.stringify(e));
-                e2.index=this.state.wireframer.controls.length;
-                e2.top=e.top-100;
-                e2.left=e.left-100;
+                let e = temp.controls[this.state.elementSelected]
+                let e2 = JSON.parse(JSON.stringify(e));
+                e2.index = this.state.wireframer.controls.length;
+                e2.top = e.top - 100;
+                e2.left = e.left - 100;
                 temp.controls.push(e2);
 
                 this.setState({
@@ -191,17 +311,20 @@ class WireframerScreen extends Component {
                 })
             }
             if (e.key === "Backspace") {
-                console.log("DELETE detected. Delete element: "+this.state.elementSelected)
+                console.log("DELETE detected. Delete element: " + this.state.elementSelected)
                 let temp = this.state.wireframer;
-                
-                temp.controls.splice(this.state.elementSelected,1);
-                for (let i=this.state.elementSelected;i<temp.controls.length;i++){
-                    temp.controls[i].index=i
+
+                temp.controls.splice(this.state.elementSelected, 1);
+                for (let i = this.state.elementSelected; i < temp.controls.length; i++) {
+                    temp.controls[i].index = i
                 }
                 this.setState({
                     wireframer: temp
                 })
             }
+        }
+        else {
+            console.log("No element selected.")
         }
     }
     selectElement = (index, event) => {
@@ -227,53 +350,9 @@ class WireframerScreen extends Component {
             alert("")
         }
     }
-    // handleDrag = (deltaX, deltaY) => {
-    //     let temp=this.state.wireframer;
-    //     temp.controls[0].left=temp.controls[0].left+deltaX;
-    //     temp.controls[0].top=temp.controls[0].top+deltaY;
-    //      this.setState(
-    //        { wireframer:temp,}
-    //     );
-    //   }
-
-    handleResize = (style, isShiftKey, type, element) => {
-        // type is a string and it shows which resize-handler you clicked
-        // e.g. if you clicked top-right handler, then type is 'tr'
-        let { top, left, width, height } = style
-        top = Math.round(top)
-        left = Math.round(left)
-        width = Math.round(width)
-        height = Math.round(height)
-
-        let temp = this.state.wireframer;
-
-        temp.controls[element.index].top = top;
-        temp.controls[element.index].height = height;
-        temp.controls[element.index].left = left;
-        temp.controls[element.index].width = width;
-        this.setState({
-            wireframer: temp,
-        })
-    }
     editName = (value) => {
         let t = this.state.wireframers;
         t[this.state.index].name = value;
-        this.setState({
-            wireframers: t
-        })
-    }
-    changeDimension = (value, type) => {
-        let t = this.state.wireframers;
-        if (value == "") { value = 0; }
-        if (type == "width") {
-            t[this.state.index].board_width = parseInt(value);
-        }
-        else if (type == "height") {
-            t[this.state.index].board_height = parseInt(value);
-        }
-        else {
-            alert("WTF!!! It's not supposed to happen!!!")
-        }
         this.setState({
             wireframers: t
         })

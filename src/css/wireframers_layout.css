@@ -60,6 +60,12 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 /* I wrote below */
+#white_board{
+  border-style: ridge;
+}
+#property_section{
+  border-style: ridge;
+}
 .outContainer{
   border-style: ridge;
 }
@@ -103,7 +109,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   display: inline-block;
 }
 #white_board{
-  background-color: black;
+  background-color: white;
   /* width: 500px;
   height: 400px; */
 }
