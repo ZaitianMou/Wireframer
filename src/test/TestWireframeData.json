@@ -48,6 +48,18 @@
 							"text_font_size":12,
 							"color":"white",
 							"border": 2
+						},
+						{
+							"control_type":"container",
+							"index":3,
+							"top": 500,
+							"left": 500,
+							"width": 200,
+							"height": 200,
+							"text": "This is a container.",
+							"text_font_size":12,
+							"color":"white",
+							"border": 2
 						}
 					]
 
