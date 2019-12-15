@@ -179,25 +179,25 @@ class WireframerScreen extends Component {
 
                         <div className="input-field">
                             <label htmlFor="email" className="active">Text</label>
-                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].text : null}
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].text : null}
                                 type="text" name="name" id="text_input" onChange={(event) => this.changeProperty("text", event.target.value)} />
                         </div>
 
                         <div className="input-field">
-                            <label htmlFor="email" className="active">Font size</label>
-                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].text_font_size : null}
-                                type="text" name="name" id="font_size_input" onChange={(event) => this.changeProperty("text_font_size", event.target.value)} />
+                            <label className="active">Font size</label>
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].text_font_size : null}
+                                type="range" min='5' max='40' id="font_size_input" onChange={(event) => this.changeProperty("text_font_size", event.target.value)} />
                         </div>
                         <p>Background Color</p>
-                        <input value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].background_color : null}
+                        <input value={this.state.wireframer && this.state.elementSelected!=null? this.state.wireframer.controls[this.state.elementSelected].background_color : null}
                         type="color" name="background_color" onChange={(event)=>this.changeProperty("background_color",event.target.value)}></input>
                         
                         <p>border color </p>
-                        <input value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].border_color : null}
+                        <input value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].border_color : null}
                         type="color" name="border_color" onChange={(event)=>this.changeProperty("border_color",event.target.value)}></input>
 
                         <p>Text color</p>
-                        <input value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].text_color : null}
+                        <input value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].text_color : null}
                         type="color" name="text_color"  onChange={(event)=>this.changeProperty("text_color",event.target.value)}></input>
 {/* 
                         <div>
@@ -237,13 +237,13 @@ class WireframerScreen extends Component {
 
                         <div className="input-field">
                             <label htmlFor="email" className="active">Board thickness</label>
-                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].border_thickness : null}
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].border_thickness : null}
                                 type="range" name="points" min="1" max="20" id="board_thickness_input" onChange={(event) => this.changeProperty("border_thickness", event.target.value)} />
                         </div>
 
                         <div className="input-field">
                             <label htmlFor="email" className="active">Board radius</label>
-                            <input className="active" value={this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].border_radius : null}
+                            <input className="active" value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].border_radius : null}
                                 type="range" name="points" min="1" max="100" id="board_radius_input" onChange={(event) => this.changeProperty("border_radius", event.target.value)} />
                         </div>
 
