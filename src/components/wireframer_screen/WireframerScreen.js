@@ -9,7 +9,8 @@ import { Button, Modal } from 'react-materialize';
 import Control from './Control';
 import { Rnd } from 'react-rnd';
 import reactCSS from 'reactcss'
-import { SketchPicker } from 'react-color'
+import { SketchPicker } from 'react-color';
+import Rectangle from 'react-rectangle';
 
 class WireframerScreen extends Component {
     state = {
@@ -20,6 +21,7 @@ class WireframerScreen extends Component {
         userID: '',
         inArrayPosition: -1, //position of currne wireframer in wireframers
         displayColorPicker: false,
+        scale: 1
     }
 
     render() {
@@ -68,15 +70,23 @@ class WireframerScreen extends Component {
                     <input className="active" value={this.state.wireframer ? this.state.wireframer.name : null} type="text" name="name"
                         id="name_input_field" onChange={(event) => this.editName(event.target.value)} />
                 </div>
+    
 
                 <div className="row outContainer">
                     <div className="col s2">
-                        <div className="zoomAndSaveSection">
-                            <i className="material-icons">zoom_in</i>
-                            <i className="material-icons">zoom_out</i>
+                        <div className="saveSection">
+                       
+                            <p className="save_button" onClick={() => this.saveWork(this.state.wireframer.controls)} >Save</p>
+                            <p className="close_button modal-trigger" href={"#modalWhenClose"} >Close</p>
+                        </div>
+                    
+                        <div className="zoomAndDimensionSection">
+                            <i className="material-icons" id="zoom_in_button" onClick={() => this.zoomIn()}>zoom_in</i>
+                            <i className="material-icons" id="zoom_out_button" onClick={() => this.zoomOut()}>zoom_out</i>
+                            <p style={{margin:'0'}}>Current: {this.state.scale}X</p>
                             <div className="input-field">
                                 <label htmlFor="email" className="active">board width:</label>
-                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_width : null} type="number" name="name"  min="1" max="5000"
+                                <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_width : null} type="number" name="name" min="1" max="5000"
                                     id="dimension_width_input" onChange={() => document.getElementById("button_update_dimension").disabled = false} />
                             </div>
                             <div className="input-field">
@@ -84,10 +94,8 @@ class WireframerScreen extends Component {
                                 <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_height : null} type="number" name="name" min="1" max="5000"
                                     id="dimension_height_input" onChange={() => document.getElementById("button_update_dimension").disabled = false} />
                             </div>
-                            <button id="button_update_dimension" onClick={() => this.updateDimension()}>Update</button>
-
-                            <p className="save_button" onClick={() => this.saveWork(this.state.wireframer.controls)} >Save</p>
-                            <p className="close_button" className={"modal-trigger"} href={"#modalWhenClose"} >Close</p>
+                            <p id="button_update_dimension" onClick={() => this.updateDimension()}>Update</p>
+                           
                             <Modal id="modalWhenClose" header={"Want to save your work before leave?"}>
                                 <Link to="/" ><Button className="submit_button_in_modal" onClick={() => { this.saveWork() }}>
                                     <i>Save</i>
@@ -99,40 +107,44 @@ class WireframerScreen extends Component {
                         </div>
                         <div className="divider"></div>
                         <div className="add_element_section">
-
-
-                            <div onClick={() => this.createAContainer()} className="add_element_icon">
-                                <p>Container</p>
+                            <p>
+                                Click to add element.
+                            </p>
+                            <div onClick={() => this.createAContainer()} style={{ textAlign:'center',borderStyle: "solid", borderWidth: '2px', width: "80%",borderRadius:'1px' }} className="add_element_icon">
+                                <Rectangle aspectRatio={[5, 4]}>
+                                    <div style={{ alignContent: "center" }} >
+                                        Container
+                                </div>
+                                </Rectangle>
                             </div>
                             <div onClick={() => this.createALabel()} className="add_element_icon">
-                                <p>Prompt for input</p>
+                                {/* <i className="material-icons">text_fields</i> */}
                                 <p>Label</p>
                             </div>
-
-                            <div onClick={() => this.createAButton()} className="add_element_icon">
-                                <button disabled={true}>Submit</button>
-                                <p>Button</p>
+                            
+                            <div >
+                                <button onClick={() => this.createAButton()} className="add_element_icon">Button</button>
+                             
                             </div>
-                            <div onClick={() => this.createATextfield()} className="add_element_icon">
-                                <i className="material-icons">text_fields</i>
-
-                                <p>Textfield</p>
+                            <div className="add_element_icon">
+                                <input value="Textfield" onClick={() => this.createATextfield()} ></input>
                             </div>
 
                         </div>
 
                     </div>
 
-                    <div >
-                        <div  className="col s7" id="white_board" onClick={() => this.unselectElement()} style={this.state.wireframer ? { height: this.state.wireframer.board_height, width: this.state.wireframer.board_width } : {}}>
+                    <div>
+                        <div className="col s7" id="white_board"
+                            onClick={() => this.unselectElement()} style={this.state.wireframer ? { height: this.state.wireframer.board_height, width: this.state.wireframer.board_width, transform: 'scale(' + this.state.scale + ')' } : {}}>
 
                             {this.state.wireframer && this.state.wireframer.controls.map((element, index) => (
 
-                                <div  onClick={(e) => this.selectElement(index, e)} >
+                                <div onClick={(e) => this.selectElement(index, e)} >
                                     <Rnd id={"control" + index}
                                         size={{ width: parseInt(element.width), height: parseInt(element.height) }}
                                         position={{
-                                            x: element.left < 0 ? 0 : (element.left > this.state.wireframer.board_width - parseInt(element.width,10) ? this.state.wireframer.board_width - parseInt(element.width,10) : element.left),
+                                            x: element.left < 0 ? 0 : (element.left > this.state.wireframer.board_width - parseInt(element.width, 10) ? this.state.wireframer.board_width - parseInt(element.width, 10) : element.left),
                                             y: this.getTop(element.top, parseInt(element.height))
                                         }}
                                         onDragStop={(e, d) => {
@@ -232,6 +244,20 @@ class WireframerScreen extends Component {
             </div>
         );
     }
+    zoomIn = () => {
+        let t = this.state.scale;
+        this.setState({
+            scale: t * 2
+        })
+        console.log("Now the scale is:" + this.state.scale)
+    }
+    zoomOut = () => {
+        let t = this.state.scale;
+        this.setState({
+            scale: t / 2
+        })
+        console.log("Now the scale is:" + this.state.scale)
+    }
     getTop(top, height) {
         height = parseInt(height, 10);
         if (top < 0)
@@ -291,23 +317,23 @@ class WireframerScreen extends Component {
         let width = parseInt(document.getElementById("dimension_width_input").value);
         let height = parseInt(document.getElementById("dimension_height_input").value);
         let t = this.state.wireframers;
-        
-        if (!(width>=1 && width<=5000)){
+
+        if (!(width >= 1 && width <= 5000)) {
             alert("Input Invalid.")
             return null
         }
-        if (!(height>=1 && height<=5000)){
+        if (!(height >= 1 && height <= 5000)) {
             alert("Input Invalid.")
             return null
         }
-        t[this.state.index].board_width =width
-        t[this.state.index].board_height =height
+        t[this.state.index].board_width = width
+        t[this.state.index].board_height = height
         this.setState({
             wireframers: t
         })
 
         document.getElementById("button_update_dimension").disabled = true
-    
+
     }
 
     componentDidMount() {
@@ -348,7 +374,7 @@ class WireframerScreen extends Component {
     }
     selectElement = (index, event) => {
         event.stopPropagation();
-        if (this.state.elementSelected!=null){
+        if (this.state.elementSelected != null) {
             document.getElementById("control" + this.state.elementSelected).classList.remove("selected_control");
         }
         this.setState({
@@ -357,8 +383,8 @@ class WireframerScreen extends Component {
         document.getElementById("control" + index).className = "selected_control";
     }
     unselectElement = () => {
-        if (this.state.elementSelected!=null){
-            document.getElementById("control" + this.state.elementSelected).classList.remove( "selected_control");
+        if (this.state.elementSelected != null) {
+            document.getElementById("control" + this.state.elementSelected).classList.remove("selected_control");
         }
         this.setState({
             elementSelected: null
@@ -404,12 +430,13 @@ class WireframerScreen extends Component {
             "index": temp.controls.length,
             "top": 0,
             "left": 0,
-            "width": 50,
-            "height": 20,
+            "width": 130,
+            "height": 40,
             "text": "This is a button.",
             "text_font_size": 12,
             "color": "white",
-            "border": 2
+            "border_thickness": 2,
+			"border_radius":1
         })
         this.setState({
             wireframer: temp
@@ -422,12 +449,13 @@ class WireframerScreen extends Component {
             "index": temp.controls.length,
             "top": 0,
             "left": 0,
-            "width": 50,
+            "width": 85,
             "height": 20,
             "text": "This is a Label.",
             "text_font_size": 12,
             "color": "white",
-            "border": 2
+            "border_thickness": 0,
+			"border_radius":0
         })
         this.setState({
             wireframer: temp
@@ -440,12 +468,13 @@ class WireframerScreen extends Component {
             "index": temp.controls.length,
             "top": 0,
             "left": 0,
-            "width": 50,
+            "width": 110,
             "height": 20,
             "text": "This is a textfield.",
             "text_font_size": 12,
             "color": "white",
-            "border": 2
+            "border_thickness": 0,
+            "border_radius":0
         })
         this.setState({
             wireframer: temp
@@ -463,7 +492,8 @@ class WireframerScreen extends Component {
             "text": "This is a container.",
             "text_font_size": 12,
             "color": "white",
-            "border": 2
+            "border_thickness": 2,
+			"border_radius":10
         })
         this.setState({
             wireframer: temp

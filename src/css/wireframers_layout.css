@@ -78,20 +78,35 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   height: 550px;
 }
 
-.zoomAndSaveSection{
+.zoomAndDimensionSection{
   border-style: ridge;
 }
+.saveSection{
+  border-style: ridge;
+}
+
 .save_button{
-  position: absolute;
-  top: 20%;
-  left: 7.5%;
   cursor: pointer;
+  border-style: solid;
+  border-radius: 5px;
+  margin: 7px;
+  text-align: center;
+
 }
 .close_button{
-  position: absolute;
-  top: 22%;
-  left: 11.3%;
   cursor: pointer;
+  border-style: solid;
+  border-radius: 5px;
+  margin: 7px;
+  text-align: center;
+}
+#button_update_dimension{
+  cursor: pointer;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  margin: 3px;
+  text-align: center;
 }
 
 .add_element_section{
@@ -122,7 +137,8 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   /* overflow-y: scroll;
   overflow-x: scroll;
   white-space: nowrap; */
-  padding: 0
+  padding: 0;
+  /* transform: scale(0.2); */
 }
 
 #name_input_field{
@@ -133,6 +149,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   width: 10%;
   height: 20%;
   font-size: 12px;
+  height: 2rem;
 }
 
 
@@ -140,6 +157,12 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   outline-width: 1px;
   outline-style: dashed;
   outline-color: red;
+}
+#zoom_in_button{
+  cursor: pointer;
+}
+#zoom_out_button{
+  cursor: pointer;
 }
 /* 
 .left{

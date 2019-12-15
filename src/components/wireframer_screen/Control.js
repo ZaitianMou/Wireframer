@@ -29,7 +29,7 @@ class Control extends Component {
         else if (element.control_type == "container") {
             return (
                 <Rectangle aspectRatio={[5, 3]}>
-                    <div style={{ background: '#607d8b', width: '100%', height: '100%', borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }} />
+                    <div style={{ background: '#607d8b', width: '100%', height: '100%', borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`, borderStyle:"ridge"}}/>
                 </Rectangle>
             )
         }
