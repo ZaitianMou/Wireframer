@@ -11,6 +11,7 @@ class Control extends Component {
     state = {
         element: null,
     }
+    
     render() {
         const element = this.props.element;
         if (element.control_type == "button") {

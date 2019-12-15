@@ -1,12 +1,12 @@
 {
-	"users": [
+	"users":[
 		{
 			"first_name": "Zaitian",
-			"last_name": "Mou",
-			"email": "zaitian.mou@stonybrook.edu",
+			"last_name":"Mou",
+			"email":"zaitian.mou@stonybrook.edu",
 			"whetherAdministrator": false,
-			"initials": "zm",
-			"wireframers": [
+			"initials":"zm",
+			"wireframers":[
 				{
 					"name": "Default Wireframer",
 					"index": 0,
@@ -14,53 +14,53 @@
 					"board_width": 650,
 					"controls": [
 						{
-							"control_type": "button",
-							"index": 0,
+							"control_type":"button",
+							"index":0,
 							"top": 300,
 							"left": 300,
 							"width": 200,
 							"height": 100,
 							"text": "This is a button.",
-							"text_font_size": 12,
-							"border_thickness": 2,
-							"border_radius": 1,
+							"text_font_size":12,
 							"background_color":"#bfc9ca",
 							"border_color":"#7fb3d5",
-							"text_color":"#17202a"
+							"text_color":"#17202a",
+							"border_thickness": 2,
+							"border_radius":1
 						},
 						{
-							"control_type": "label",
-							"index": 1,
+							"control_type":"label",
+							"index":1,
 							"top": 100,
 							"left": 100,
 							"width": 100,
 							"height": 16,
 							"text": "This is a label.",
-							"text_font_size": 12,
+							"text_font_size":12,
 							"background_color":"#bfc9ca",
 							"border_color":"#7fb3d5",
 							"text_color":"#17202a",
 							"border_thickness": 2,
-							"border_radius": 1
+							"border_radius":1
 						},
 						{
-							"control_type": "textfield",
-							"index": 2,
+							"control_type":"textfield",
+							"index":2,
 							"top": 400,
 							"left": 400,
 							"width": 200,
 							"height": 50,
 							"text": "This is a textfield.",
-							"text_font_size": 12,
+							"text_font_size":12,
 							"background_color":"#bfc9ca",
 							"border_color":"#7fb3d5",
 							"text_color":"#17202a",
 							"border_thickness": 2,
-							"border_radius": 1
+							"border_radius":1
 						},
 						{
-							"control_type": "container",
-							"index": 3,
+							"control_type":"container",
+							"index":3,
 							"top": 500,
 							"left": 500,
 							"width": 200,
@@ -71,10 +71,13 @@
 							"border_color":"#7fb3d5",
 							"text_color":"#17202a",
 							"border_thickness": 2,
-							"border_radius": 1
+							"border_radius":1
 						}
 					]
+
+
 				},
+
 				{
 					"name": "Second Default Wireframer",
 					"board_height": 650,
@@ -112,8 +115,12 @@
 							"border_radius": 1
 						}
 					]
+
 				}
+
 			]
 		}
+
 	]
+
 }

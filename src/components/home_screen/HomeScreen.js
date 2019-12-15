@@ -22,13 +22,21 @@ class HomeScreen extends Component {
         const users = this.props.users.users;
         const userID = getFirebase().auth().currentUser.uid;
         this.state.userID = userID;
-        if (this.state.wireframers == null) {
-            if (!this.props.users.users) {
+       
+        //if (this.state.wireframers == null) {
+            console.log("start")
+            if (this.props.users.users!=undefined) {
                 // this.state.user=users[userID];
-                console.log(this.props.auth.uid)
-                this.state.user = this.props.users.users[this.props.auth.uid];
+                console.log("!!!");
+                console.log(this.props.auth.uid);
+                console.log(this.props.users.users)
+                console.log(this.props.users.users[this.props.auth.uid]);
+                console.log(this.props.users.users[this.props.auth.uid]["wireframers"])
+                this.state.users=this.props.users.users[this.props.auth.uid]
+                
                 //let list=users[userID]["wireframers"];
-                let list = this.props.users.users[this.props.auth.uid]["wireframers"];
+                if(this.props.users.users[this.props.auth.uid]!=undefined)
+                    var list = this.props.users.users[this.props.auth.uid]["wireframers"];
                 function compare(a, b) {
 
                     if (a.lastOpened == null) return 1;
@@ -38,12 +46,13 @@ class HomeScreen extends Component {
                     }
                     else return -1
                 }
-                if (list != null) {
+                console.log(list)
+                if (list!=undefined && list.length>=2) {
                     list = list.sort(compare);
                     this.state.wireframers = list;
                 }
             }
-        }
+    //}
 
        // console.log(this.state.wireframers);
 

@@ -8,10 +8,6 @@ import firebase from "../../config/firebaseConfig";
 import { Button, Modal } from 'react-materialize';
 import Control from './Control';
 import { Rnd } from 'react-rnd';
-import reactCSS from 'reactcss'
-import { SketchPicker } from 'react-color';
-import Rectangle from 'react-rectangle';
-
 class WireframerScreen extends Component {
     state = {
         wireframer: null,
@@ -32,14 +28,16 @@ class WireframerScreen extends Component {
         if (this.props.users == undefined)
             return <React.Fragment />
 
+       
         this.state.index = this.props.match.params.index;
         this.state.userID = getFirebase().auth().currentUser.uid;
         const dt = new Date();
         const x = dt.toUTCString();
+        
         if (this.state.wireframers == null) {
 
             if (this.props.users.users != undefined) {
-                console.log("!!!");
+               
                 const user = firebase.firestore().collection("users").doc(this.state.userID);
                 user.get().then(doc => {
                     const wireframers = doc.data().wireframers;
@@ -57,33 +55,33 @@ class WireframerScreen extends Component {
                             wireframers: this.state.wireframers
                         })
 
-
                     }
                 })
             }
         }
 
         return (
+           
             <div>
                 <div className="input-field">
                     <label htmlFor="email" className="active">Name</label>
                     <input className="active" value={this.state.wireframer ? this.state.wireframer.name : null} type="text" name="name"
                         id="name_input_field" onChange={(event) => this.editName(event.target.value)} />
                 </div>
-
+    
 
                 <div className="row outContainer">
                     <div className="leftColumn">
                         <div className="saveSection">
-
+                       
                             <p className="save_button" onClick={() => this.saveWork(this.state.wireframer.controls)} >Save</p>
                             <p className="close_button modal-trigger" href={"#modalWhenClose"} >Close</p>
                         </div>
-
+                    
                         <div className="zoomAndDimensionSection">
                             <i className="material-icons" id="zoom_in_button" onClick={() => this.zoomIn()}>zoom_in</i>
                             <i className="material-icons" id="zoom_out_button" onClick={() => this.zoomOut()}>zoom_out</i>
-                            <p style={{ margin: '0' }}>Current: {this.state.scale}X</p>
+                            <p style={{margin:'0'}}>Current: {this.state.scale}X</p>
                             <div className="input-field">
                                 <label htmlFor="email" className="active">board width:</label>
                                 <input className="active dimension_input_field" defaultValue={this.state.wireframer ? this.state.wireframer.board_width : null} type="number" name="name" min="1" max="5000"
@@ -95,7 +93,7 @@ class WireframerScreen extends Component {
                                     id="dimension_height_input" onChange={() => document.getElementById("button_update_dimension").disabled = false} />
                             </div>
                             <p id="button_update_dimension" onClick={() => this.updateDimension()}>Update</p>
-
+                           
                             <Modal id="modalWhenClose" header={"Want to save your work before leave?"}>
                                 <Link to="/" ><Button className="submit_button_in_modal" onClick={() => { this.saveWork() }}>
                                     <i>Save</i>
@@ -120,7 +118,7 @@ class WireframerScreen extends Component {
 
                             <div  style={{left: '20%', position: 'relative' }}>
                                 <button onClick={() => this.createAButton()} className="add_element_icon">Button</button>
-
+                             
                             </div>
                             <div className="add_element_icon" >
                                 <input value="Textfield" onClick={() => this.createATextfield()} ></input>
@@ -253,8 +251,6 @@ class WireframerScreen extends Component {
 
     changeProperty = (type, value) => {
         console.log(value)
-        if (this.state.elementSelected == null)
-            return null
         let temp = this.state.wireframer;
         switch (type) {
             case "text": temp.controls[this.state.elementSelected].text = value; break;
@@ -264,7 +260,6 @@ class WireframerScreen extends Component {
             case "background_color": temp.controls[this.state.elementSelected].background_color=value; break;
             case "border_color":temp.controls[this.state.elementSelected].border_color=value; break;
             case "text_color": temp.controls[this.state.elementSelected].text_color=value; break;
-
         }
         this.setState({
             wireframer: temp
@@ -347,7 +342,7 @@ class WireframerScreen extends Component {
 
                
             }
-            if (e.key === "Backspace" && e.ctrlKey) {
+            if (e.key === "Backspace") {
                 console.log("DELETE detected. Delete element: " + this.state.elementSelected)
                 let temp = this.state.wireframer;
 
@@ -359,8 +354,7 @@ class WireframerScreen extends Component {
                 if ( document.getElementById("control" + this.state.elementSelected)!=null)
                     document.getElementById("control" + this.state.elementSelected).classList.remove("selected_control");
                 this.setState({
-                    wireframer: temp,
-                    elementSelected: null
+                    wireframer: temp
                 })
             }
         }
@@ -370,7 +364,6 @@ class WireframerScreen extends Component {
     }
     selectElement = (index, event) => {
         event.stopPropagation();
-        console.log("select control: " + index)
         if (this.state.elementSelected != null) {
             document.getElementById("control" + this.state.elementSelected).classList.remove("selected_control");
         }
@@ -431,11 +424,9 @@ class WireframerScreen extends Component {
             "height": 40,
             "text": "This is a button.",
             "text_font_size": 12,
-            "background_color":"#bfc9ca",
-			"border_color":"#7fb3d5",
-			"text_color":"#17202a",
+            "color": "white",
             "border_thickness": 2,
-            "border_radius": 1
+			"border_radius":1
         })
         this.setState({
             wireframer: temp
@@ -452,11 +443,9 @@ class WireframerScreen extends Component {
             "height": 20,
             "text": "This is a Label.",
             "text_font_size": 12,
-            "background_color":"#bfc9ca",
-			"border_color":"#7fb3d5",
-			"text_color":"#17202a",
+            "color": "white",
             "border_thickness": 0,
-            "border_radius": 0
+			"border_radius":0
         })
         this.setState({
             wireframer: temp
@@ -473,11 +462,9 @@ class WireframerScreen extends Component {
             "height": 20,
             "text": "This is a textfield.",
             "text_font_size": 12,
-            "background_color":"#bfc9ca",
-			"border_color":"#7fb3d5",
-			"text_color":"#17202a",
+            "color": "white",
             "border_thickness": 0,
-            "border_radius": 0
+            "border_radius":0
         })
         this.setState({
             wireframer: temp
@@ -498,7 +485,7 @@ class WireframerScreen extends Component {
 			"border_color":"#7fb3d5",
 			"text_color":"#17202a",
             "border_thickness": 2,
-            "border_radius": 10
+			"border_radius":10
         })
         this.setState({
             wireframer: temp

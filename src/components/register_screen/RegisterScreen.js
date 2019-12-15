@@ -29,7 +29,20 @@ class RegisterScreen extends Component {
 
     const { props, state } = this;
     const { firebase } = props;
-    const newUser = { ...state };
+    const newUser = { 
+      email: this.state.email,
+      password: this.state.password,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      wireframers:{
+        "name": "Your first wireframer",
+        "board_height": 650,
+        "board_width": 650,
+        "index": 0,
+        "controls": []
+      }
+
+     };
 
     props.register(newUser, firebase);
   }
