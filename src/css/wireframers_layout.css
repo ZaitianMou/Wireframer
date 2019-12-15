@@ -60,9 +60,22 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 }
 
 /* I wrote below */
+#white_board_wrapper{
+  
+  /* overflow-y: scroll;
+  overflow-x: scroll; */
+
+  width: 800px;
+
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
 #white_board{
   border-style: ridge;
-  
+
+}
+.leftColumn{
+  width:20%;
 }
 
 #property_section{

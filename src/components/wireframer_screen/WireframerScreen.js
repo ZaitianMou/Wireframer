@@ -73,7 +73,7 @@ class WireframerScreen extends Component {
 
 
                 <div className="row outContainer">
-                    <div className="col s2">
+                    <div className="leftColumn">
                         <div className="saveSection">
 
                             <p className="save_button" onClick={() => this.saveWork(this.state.wireframer.controls)} >Save</p>
@@ -108,24 +108,21 @@ class WireframerScreen extends Component {
                         <div className="divider"></div>
                         <div className="add_element_section">
                             <p>
-                                Click to add element.
+                                Click to add element
                             </p>
-                            <div onClick={() => this.createAContainer()} style={{ textAlign: 'center', borderStyle: "solid", borderWidth: '2px', width: "80%", borderRadius: '1px' }} className="add_element_icon">
-                                <Rectangle aspectRatio={[5, 4]}>
-                                    <div style={{ alignContent: "center" }} >
-                                        Container
-                                </div>
-                                </Rectangle>
+                            <div onClick={() => this.createAContainer()} style={{ textAlign:'center', borderStyle: "solid", borderWidth: '1px', 
+                            width: "80%", borderRadius: '1px',left: '10%', position: 'relative' }} className="add_element_icon">
+                                <p>Container</p>
                             </div>
-                            <div onClick={() => this.createALabel()} className="add_element_icon">
+                            <div onClick={() => this.createALabel()} className="add_element_icon" style={{textAlign:'center'}}>
                                 <p>Label</p>
                             </div>
 
-                            <div >
+                            <div  style={{left: '20%', position: 'relative' }}>
                                 <button onClick={() => this.createAButton()} className="add_element_icon">Button</button>
 
                             </div>
-                            <div className="add_element_icon">
+                            <div className="add_element_icon" >
                                 <input value="Textfield" onClick={() => this.createATextfield()} ></input>
                             </div>
 
@@ -133,8 +130,8 @@ class WireframerScreen extends Component {
 
                     </div>
 
-                    <div>
-                        <div className="col s7" id="white_board"
+                    <div className="" id="white_board_wrapper" >
+                        <div  id="white_board"
                             onClick={() => this.unselectElement()} style={this.state.wireframer ? { height: this.state.wireframer.board_height, width: this.state.wireframer.board_width, transform: 'scale(' + this.state.scale + ')' } : {}}>
 
                             {this.state.wireframer && this.state.wireframer.controls.map((element, index) => (
@@ -174,7 +171,7 @@ class WireframerScreen extends Component {
                     </div>
 
 
-                    <div className="col s3" id="property_section">
+                    <div className="" id="property_section">
                         <p>Properties</p>
 
                         <div className="input-field">
@@ -188,51 +185,20 @@ class WireframerScreen extends Component {
                             <input className="active" value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].text_font_size : null}
                                 type="range" min='5' max='40' id="font_size_input" onChange={(event) => this.changeProperty("text_font_size", event.target.value)} />
                         </div>
-                        <p>Background Color</p>
+                        <p style={{left: '5%', position: 'relative', margin:'3px'  }}>Background color</p>
                         <input value={this.state.wireframer && this.state.elementSelected!=null? this.state.wireframer.controls[this.state.elementSelected].background_color : null}
-                        type="color" name="background_color" onChange={(event)=>this.changeProperty("background_color",event.target.value)}></input>
+                        type="color" name="background_color" onChange={(event)=>this.changeProperty("background_color",event.target.value)}
+                        style={{left: '10%', position: 'relative'}}></input>
                         
-                        <p>border color </p>
+                        <p style={{left: '5%', position: 'relative', margin:'3px'  }}>Border color </p>
                         <input value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].border_color : null}
-                        type="color" name="border_color" onChange={(event)=>this.changeProperty("border_color",event.target.value)}></input>
+                        type="color" name="border_color" onChange={(event)=>this.changeProperty("border_color",event.target.value)}
+                        style={{left: '10%', position: 'relative' }}></input>
 
-                        <p>Text color</p>
+                        <p style={{left: '5%', position: 'relative', margin:'3px'  }}>Text color</p>
                         <input value={this.state.wireframer && this.state.elementSelected!=null ? this.state.wireframer.controls[this.state.elementSelected].text_color : null}
-                        type="color" name="text_color"  onChange={(event)=>this.changeProperty("text_color",event.target.value)}></input>
-{/* 
-                        <div>
-                            <div style={{
-                                padding: '5px',
-                                background: '#fff',
-                                borderRadius: '1px',
-                                boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-                                display: 'inline-block',
-                                cursor: 'pointer',
-                            }} onClick={this.handleClick}>
-                                <div style={{
-                                    width: '36px',
-                                    height: '14px',
-                                    borderRadius: '2px',
-                                    background: `rgba(${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.r : null}, ${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.g : null}, 
-                                    ${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.b : null}, ${this.state.wireframer && this.state.elementSelected ? this.state.wireframer.controls[this.state.elementSelected].color.a : null} :{})`,
-                                }} />
-                            </div>
-                            {this.state.displayColorPicker ? <div style={{
-                                position: 'absolute',
-                                zIndex: '2',
-                            }}>
-                                <div style={{
-                                    position: 'fixed',
-                                    top: '0px',
-                                    right: '0px',
-                                    bottom: '0px',
-                                    left: '0px',
-                                }} onClick={this.handleClose} />
-
-                                <SketchPicker color={this.getColor()} onChange={this.handleChange} />
-                            </div> : null}
-
-                        </div> */}
+                        type="color" name="text_color"  onChange={(event)=>this.changeProperty("text_color",event.target.value)}
+                        style={{left: '10%', position: 'relative'}}></input>
 
 
                         <div className="input-field">
@@ -357,19 +323,29 @@ class WireframerScreen extends Component {
     }
     onKeyPressed(e) {
         if (this.state.elementSelected != null) {
-            if (e.key === 'd' && e.ctrlKey) {
+            if (e.key == 'd' && e.ctrlKey) {
                 console.log("Ctrl+D detected. Duplicate element: " + this.state.elementSelected);
                 let temp = this.state.wireframer;
                 let e = temp.controls[this.state.elementSelected]
+                console.log(e.index)
+                if ( document.getElementById("control" + e.index)!=null)
+                    document.getElementById("control" + e.index).classList.remove("selected_control");
                 let e2 = JSON.parse(JSON.stringify(e));
                 e2.index = this.state.wireframer.controls.length;
                 e2.top = e.top - 100;
                 e2.left = e.left - 100;
                 temp.controls.push(e2);
 
+               
                 this.setState({
-                    wireframer: temp
+                    wireframer: temp,
+                    elementSelected:e2.index
                 })
+               
+                if ( document.getElementById("control" + e.index)!=null)
+                    document.getElementById("control" + e2.index).className = "selected_control";
+
+               
             }
             if (e.key === "Backspace" && e.ctrlKey) {
                 console.log("DELETE detected. Delete element: " + this.state.elementSelected)
@@ -378,7 +354,10 @@ class WireframerScreen extends Component {
                 temp.controls.splice(this.state.elementSelected, 1);
                 for (let i = this.state.elementSelected; i < temp.controls.length; i++) {
                     temp.controls[i].index = i
+                  
                 }
+                if ( document.getElementById("control" + this.state.elementSelected)!=null)
+                    document.getElementById("control" + this.state.elementSelected).classList.remove("selected_control");
                 this.setState({
                     wireframer: temp,
                     elementSelected: null
@@ -513,8 +492,8 @@ class WireframerScreen extends Component {
             "left": 0,
             "width": 50,
             "height": 20,
-            "text": "This is a container.",
-            "text_font_size": 12,
+            "text": "Container has no text.",
+            "text_font_size": 0,
             "background_color":"#bfc9ca",
 			"border_color":"#7fb3d5",
 			"text_color":"#17202a",
