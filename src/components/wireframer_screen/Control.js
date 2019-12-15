@@ -15,13 +15,20 @@ class Control extends Component {
         const element = this.props.element;
         if (element.control_type == "button") {
             return (
-                <button style={{ display: "inline-block",width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px` }}> {element.text}</button>
+                <button style={{ display: "inline-block",width: "100%", height: "100%", 
+                fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, 
+                borderWidth: `${element.border_thickness}px`, backgroundColor:element.background_color,
+                borderColor:element.border_color, color:element.text_color}}> {element.text}</button>
 
             )
         }
         else if (element.control_type == "label") {
             return (
-                <div style={{ width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`,borderStyle: "ridge" }}> 
+                <div style={{ width: "100%", height: "100%", fontSize: `${element.text_font_size}px`, 
+                borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`,
+                borderStyle: "ridge" ,
+                backgroundColor:element.background_color,
+                borderColor:element.border_color, color:element.text_color}}> 
                 {element.text}
                 </div>
             )
@@ -29,13 +36,21 @@ class Control extends Component {
         else if (element.control_type == "container") {
             return (
                 <Rectangle aspectRatio={[5, 3]}>
-                    <div style={{ background: '#607d8b', width: '100%', height: '100%', borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`, borderStyle:"ridge"}}/>
+                    <div style={{ background: '#607d8b', width: '100%', height: '100%', 
+                    borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`, 
+                    borderStyle:"ridge",
+                    backgroundColor:element.background_color,
+                borderColor:element.border_color, color:element.text_color}}/>
                 </Rectangle>
             )
         }
         else if (element.control_type == "textfield") {
             return (
-                <input value={element.text} style={{ fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`,borderStyle: "ridge" }}>
+                <input value={element.text} style={{ fontSize: `${element.text_font_size}px`,
+                 borderRadius: `${element.border_radius}px`, borderWidth: `${element.border_thickness}px`,
+                 borderStyle: "ridge",
+                 backgroundColor:element.background_color,
+                borderColor:element.border_color, color:element.text_color }}>
                 </input>
             )
         }
