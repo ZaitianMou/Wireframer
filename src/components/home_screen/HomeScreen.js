@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { getFirebase } from 'react-redux-firebase';
 import { getFirestore } from 'redux-firestore';
 import { Button, Modal } from 'react-materialize';
+import firebase from "../../config/firebaseConfig";
 
 class HomeScreen extends Component {
 
@@ -23,38 +24,48 @@ class HomeScreen extends Component {
         const userID = getFirebase().auth().currentUser.uid;
         this.state.userID = userID;
        
-        //if (this.state.wireframers == null) {
+        if(this.state.user==null){
             console.log("start")
             if (this.props.users.users!=undefined) {
                 // this.state.user=users[userID];
                 console.log("!!!");
                 console.log(this.props.auth.uid);
-                console.log(this.props.users.users)
-                console.log(this.props.users.users[this.props.auth.uid]);
-                console.log(this.props.users.users[this.props.auth.uid]["wireframers"])
-                this.state.users=this.props.users.users[this.props.auth.uid]
+                //console.log(this.props.users.users[userID]["wireframers"])
+                //this.state.users=this.props.users.users[this.props.auth.uid]
                 
                 //let list=users[userID]["wireframers"];
-                if(this.props.users.users[this.props.auth.uid]!=undefined)
-                    var list = this.props.users.users[this.props.auth.uid]["wireframers"];
-                function compare(a, b) {
+                //if(this.props.users.users[this.props.auth.uid]!=undefined)
+                var user = firebase.firestore().collection("users").doc(userID);
+              
+                user.get().then(doc=>{
+                    const wireframers = doc.data().wireframers;
+                    console.log(".")
+                    console.log(wireframers)
+                    this.setState({
+                        user:doc.data(),
+                        wireframres:wireframers
+                    })
+                    this.state.user=doc.data();
+                    this.state.wireframers=wireframers;
+                }
 
-                    if (a.lastOpened == null) return 1;
-                    if (b.lastOpened == null) return -1;
-                    if (a.lastOpened < b.lastOpened) {
-                        return 1
-                    }
-                    else return -1
-                }
-                console.log(list)
-                if (list!=undefined && list.length>=2) {
-                    list = list.sort(compare);
-                    this.state.wireframers = list;
-                }
+                )
+                
+                // if (list!=undefined && list.length>=2) {
+                //     list = list.sort(compare);
+                //     this.state.wireframers = list;
+                // }
             }
-    //}
+        }
+        function compare(a, b) {
 
-       // console.log(this.state.wireframers);
+            if (a.lastOpened == null) return 1;
+            if (b.lastOpened == null) return -1;
+            if (a.lastOpened < b.lastOpened) {
+                return 1
+            }
+            else return -1
+        }
 
         return (
             <div className="dashboard container">

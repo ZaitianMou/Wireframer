@@ -34,13 +34,21 @@ class RegisterScreen extends Component {
       password: this.state.password,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
-      wireframers:{
+      wireframers:[{
         "name": "Your first wireframer",
         "board_height": 650,
         "board_width": 650,
         "index": 0,
         "controls": []
-      }
+      },
+      {
+        "name": "Your second wireframer",
+        "board_height": 650,
+        "board_width": 650,
+        "index": 0,
+        "controls": []
+      }]
+
 
      };
 
