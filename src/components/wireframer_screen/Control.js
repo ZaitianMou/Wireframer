@@ -18,7 +18,8 @@ class Control extends Component {
             return (
                 <button style={{ display: "inline-block",width: "100%", height: "100%", 
                 fontSize: `${element.text_font_size}px`, borderRadius: `${element.border_radius}px`, 
-                borderWidth: `${element.border_thickness}px`, backgroundColor:element.background_color,
+                borderWidth: `${element.border_thickness}px`, 
+                backgroundColor:element.background_color,
                 borderColor:element.border_color, color:element.text_color}}> {element.text}</button>
 
             )

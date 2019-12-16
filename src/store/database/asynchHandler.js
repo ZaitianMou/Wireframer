@@ -28,6 +28,7 @@ export const registerHandler = (newUser, firebase) => (dispatch, getState, { get
         lastName: newUser.lastName,
         initials: `${newUser.firstName[0]}${newUser.lastName[0]}`,
         whetherAdministrator: false,
+        email:newUser.email,
         wireframers:newUser.wireframers
     })).then(() => {
         dispatch(actionCreators.registerSuccess);

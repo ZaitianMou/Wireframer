@@ -354,7 +354,8 @@ class WireframerScreen extends Component {
                 if ( document.getElementById("control" + this.state.elementSelected)!=null)
                     document.getElementById("control" + this.state.elementSelected).classList.remove("selected_control");
                 this.setState({
-                    wireframer: temp
+                    wireframer: temp,
+                    elementSelected:null
                 })
             }
         }
@@ -424,7 +425,9 @@ class WireframerScreen extends Component {
             "height": 40,
             "text": "This is a button.",
             "text_font_size": 12,
-            "color": "white",
+            "background_color":"#bfc9ca",
+			"border_color":"#7fb3d5",
+			"text_color":"#17202a",
             "border_thickness": 2,
 			"border_radius":1
         })
@@ -443,7 +446,9 @@ class WireframerScreen extends Component {
             "height": 20,
             "text": "This is a Label.",
             "text_font_size": 12,
-            "color": "white",
+            "background_color":"#bfc9ca",
+			"border_color":"#7fb3d5",
+			"text_color":"#17202a",
             "border_thickness": 0,
 			"border_radius":0
         })
@@ -462,7 +467,9 @@ class WireframerScreen extends Component {
             "height": 20,
             "text": "This is a textfield.",
             "text_font_size": 12,
-            "color": "white",
+            "background_color":"#bfc9ca",
+			"border_color":"#7fb3d5",
+			"text_color":"#17202a",
             "border_thickness": 0,
             "border_radius":0
         })
