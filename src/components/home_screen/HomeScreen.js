@@ -46,6 +46,15 @@ class HomeScreen extends Component {
                         wireframres:wireframers
                     })
                     this.state.user=doc.data();
+                    wireframers.sort((a,b)=>{
+
+                        if (a.lastOpened == null) return 1;
+                        if (b.lastOpened == null) return -1;
+                        if (a.lastOpened < b.lastOpened) {
+                            return 1
+                        }
+                        else return -1
+                    })
                     this.state.wireframers=wireframers;
                 }
 
