@@ -2,6 +2,7 @@
   "name": "final_project",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://zaitianmou.github.io/Wireframer/",
   "dependencies": {
     "@material-ui/icons": "^4.5.1",
     "firebase": "^7.3.0",

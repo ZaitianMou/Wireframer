@@ -153,7 +153,9 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   padding: 0;
   /* transform: scale(0.2); */
 }
-
+#name_input_field:hover{
+  color:black;
+}
 #name_input_field{
   width:20%
 }
